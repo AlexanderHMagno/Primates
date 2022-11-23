@@ -1,27 +1,29 @@
-package sanctuary.monkeys;
+package sanctuary.animals;
 
+import sanctuary.habitat.Housing;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
 
 import java.util.UUID;
 
-public class Monkey implements Primate {
+public abstract class AnimalAbstract implements Animal{
 
-    protected String name;
+    protected final String name;
     protected final Species species;
     protected final Sex sex;
-    protected double size;
+    protected final double size;
     protected double weight;
     protected int age;
-    protected Food food;
+    protected final Food food;
     protected int health;
 
     protected UUID id;
+    protected Housing home;
 
 
-    public Monkey(String name, Species species, Sex sex, double size, double weight, int age, Food food) {
-        this.name = Monkey.formatName(name);
+    public AnimalAbstract(String name, Species species, Sex sex, double size, double weight, int age, Food food) {
+        this.name = AnimalAbstract.formatName(name);
         this.species = species;
         this.sex = sex;
         this.size = size;
@@ -36,10 +38,6 @@ public class Monkey implements Primate {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Species getSpecies() {
         return species;
     }
@@ -50,10 +48,6 @@ public class Monkey implements Primate {
 
     public double getSize() {
         return size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
     }
 
     public double getWeight() {
@@ -68,17 +62,11 @@ public class Monkey implements Primate {
         return age;
     }
 
-    public void setAge(int age) {
+    protected void setAge(int age) {
         this.age = age;
     }
 
-    public Food getFood() {
-        return food;
-    }
-
-    public void setFood(Food food) {
-        this.food = food;
-    }
+    public Food getFood() {return food;}
 
     public int getHealth() {
         return health;
@@ -88,6 +76,8 @@ public class Monkey implements Primate {
         this.health = health;
     }
 
+    public void setHome(Housing home) {this.home = home;}
+
     public boolean needsMedicalAttention() {
         return this.health < 80;
     }
@@ -95,5 +85,4 @@ public class Monkey implements Primate {
     public static String formatName (String name) {
         return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
-
 }

@@ -1,0 +1,21 @@
+Alex Quereza Male 1.70 70.05 12 Fruits
+Malandro Drill Male 1.70 70.05 12 Eggs
+Sebastian Howler Male 1.70 70.05 12 Insects
+Albert Mangabey Male 1.70 70.05 12 Leaves
+Einstein Saki Male 1.70 70.05 12 Nuts
+Goku Spider Male 1.70 70.05 12 Seeds
+Naruto Squirrel Male 1.10 70.05 12 TreeSap
+Andres Tamarin Male 1.90 70.05 12 Fruits
+Rosita Quereza Female 1.80 70.05 2 TreeSap
+Magali Quereza Female 1.40 70.05 10 Fruits
+Francis Howler Female 1.20 70.05 13 TreeSap
+Romero Mangabey Male 1.60 70.05 11 Leaves
+Eureka Saki Female 1.50 70.05 10 Nuts
+Bulma Spider Female 1.40 70.05 18 Seeds
+Karen Squirrel Female 1.30 70.05 12 TreeSap
+Romulo Tamarin Male 1.20 70.05 11 Fruits
+Lino Quereza Male 1.90 70.05 12 Eggs
+Navdeep Quereza Male 1.90 70.05 12 Fruits
+Jaki Spider Male 1.80 70.05 12 Eggs
+Navdeep Quereza Male 1.70 70.05 12 Fruits
+

@@ -7,10 +7,17 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * This represents an Enclosure. It has a separate room for each type of Animal. It extends the housing abstract class
+ */
 public class Enclosure extends Housing {
 
     private TreeMap<Species, TreeMap<String, Animal>> rooms;
 
+    /**
+     * Constructor for the enclosure Housing
+     * @param habitatName Provide a name that represent this location
+     */
     public Enclosure(String habitatName) {
         //Create an enclosure for each Animal
         this.rooms = new TreeMap<>();
@@ -44,7 +51,11 @@ public class Enclosure extends Housing {
             if (subgroup.getValue().size() > 0) {
                 System.out.println("Species:" + subgroup.getKey());
                 for (Map.Entry<String, Animal> entry : subgroup.getValue().entrySet()) {
-                    System.out.println("Name: " + entry.getKey() + " Sex:" + entry.getValue().getSex() + " Favorite food: " + entry.getValue().getFood());
+                    System.out.println(
+                            "Name: " + entry.getKey() +
+                            " Sex:" + entry.getValue().getSex() +
+                            " Favorite food: " + entry.getValue().getFood() +
+                            ", Species: " + entry.getValue().getSpecies());
                 }
             }
         }
@@ -71,10 +82,21 @@ public class Enclosure extends Housing {
         return list.toArray(new Animal[0]);
     }
 
-
+    /**
+     * Obtain the information of a room (place where only one species of animal can live at the same time);
+     * @param species Provide the species that you are looking for
+     * @return Obtain the enclosure if found. Otherwise null.
+     */
     protected TreeMap<String, Animal> getEnclosure(Species species) {
         return rooms.get(species);
     }
+
+    /**
+     * Obtain a one single animal.
+     * @param species Provide the room that you are looking for
+     * @param name find the animal by its name
+     * @return if Found the animal will be returned. Otherwise, null.
+     */
     protected Animal getAnimal(Species species, String name) {
         return this.getEnclosure(species).get(name);
     }

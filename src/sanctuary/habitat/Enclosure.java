@@ -31,7 +31,7 @@ public class Enclosure extends Housing {
     public boolean addAnimal(Animal animal) {
 
         //If Monkey doesn't need medical attention
-        if (animal.needsMedicalAttention()) {
+        if (!animal.needsMedicalAttention()) {
             TreeMap<String, Animal> location = this.getEnclosure(animal.getSpecies());
             if (location.putIfAbsent(animal.getName(),animal) == null) {
                 animal.setHome(this);

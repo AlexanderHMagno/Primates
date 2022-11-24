@@ -52,13 +52,17 @@ public class Sanctuary implements Habitat {
     /**
      * Move the animal from Isolation to Isolation
      * @param name the name that was used to register this animal
+     * @throws IllegalStateException if the animal is not cured
      */
-    public void moveAnimalToEnclosure(String name) {
+    public void moveAnimalToEnclosure(String name) throws IllegalStateException {
 
         //Check the monkey is ok
         Animal monkey = this.isolation.getAnimal(name);
 
-        if (monkey != null && monkey.needsMedicalAttention()) {
+        if (monkey != null) {
+            if(monkey.needsMedicalAttention()) {
+                throw new IllegalStateException("Animal needs to be treated first");
+            }
             monkey = this.isolation.removeAnimal(monkey.getSpecies(),name);
             this.enclosure.addAnimal(monkey);
         }
@@ -80,6 +84,8 @@ public class Sanctuary implements Habitat {
 
     @Override
     public void printAnimalsInHabitat() {
+
+        System.out.println("Welcome to " + name + "\nThis is the data information: \n");
 
         Housing[] houses = new Housing[]{this.isolation, this.enclosure};
 
@@ -110,5 +116,34 @@ public class Sanctuary implements Habitat {
     public void provideMedicalAttention (String name) {
         Animal animal = this.isolation.getAnimal(name);
         if (animal != null) animal.setHealth(100);
+    }
+
+    /**
+     * Helper method to run as a test, this will cure and move all animals
+     * to the enclosure area
+     */
+    public void moveForceToEnclosure() {
+        this.provideMedicalAttentionAll();
+        this.moveAllAnimalToEnclosure();
+    }
+
+    /**
+     * Cure Magically all animals in this Isolation
+     */
+    private void provideMedicalAttentionAll () {
+
+        String[] isolated = this.isolation.getMembersNames();
+        Arrays.stream(isolated).forEach(x -> {
+            Animal animal = this.isolation.getAnimal(x);
+            animal.setHealth(100);
+        });
+    }
+
+    /**
+     * Move all animals from isolation to enclosure
+     */
+    private void moveAllAnimalToEnclosure () {
+        String[] isolated = this.isolation.getMembersNames();
+        Arrays.stream(isolated).forEach(this::moveAnimalToEnclosure);
     }
 }

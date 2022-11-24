@@ -4,6 +4,7 @@ import sanctuary.animals.Animal;
 import sanctuary.utils.Species;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 

@@ -10,6 +10,10 @@ import sanctuary.utils.Species;
 import java.io.*;
 import java.util.Scanner;
 
+
+/**
+ * This class represents the driver of this implementation.
+ */
 public class SanctuaryKeeperDriver {
 
     public static void main(String[] args) {
@@ -61,7 +65,7 @@ public class SanctuaryKeeperDriver {
         try {
             File file = new File("src/sanctuary/utils/" +  group);
             Scanner scan = new Scanner(file);
-            String info;
+
             while (scan.hasNextLine())   {
                 String[] tokens = scan.nextLine().split(" ");
                 sanctuary.addNewAnimal(

@@ -41,10 +41,14 @@ public class Sanctuary implements Habitat {
      * @param weight - The Weight of the animal in Kilograms
      * @param age - age of the animal
      * @param food - Favorite Food of this animal
+     * @throws IllegalStateException If the Shelter is already full
+     * @throws IllegalArgumentException If the information of the animal is not complete and valid
      */
-    public void addNewAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food) {
-        Animal animal = AnimalCreator
-                .createAnimal(name, species, sex,size, weight, age, food);
+    public void addNewAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food)
+            throws IllegalStateException, IllegalArgumentException  {
+
+        Animal animal = AnimalCreator.createAnimal(name, species, sex,size, weight, age, food);
+
         this.isolation.addAnimal(animal);
     }
 
@@ -53,32 +57,53 @@ public class Sanctuary implements Habitat {
      * Move the animal from Isolation to Isolation
      * @param name the name that was used to register this animal
      * @throws IllegalStateException if the animal is not cured
+     * @throws IllegalArgumentException if the animal doesn't exit in our db
      */
-    public void moveAnimalToEnclosure(String name) throws IllegalStateException {
+    public void moveAnimalToEnclosure(String name) throws IllegalStateException, IllegalArgumentException {
 
-        //Check the monkey is ok
-        Animal monkey = this.isolation.getAnimal(name);
+        //Check the animal is ok
+        Animal animal = this.isolation.getAnimal(name);
 
-        if (monkey != null) {
-            if(monkey.needsMedicalAttention()) {
-                throw new IllegalStateException("Animal needs to be treated first");
-            }
-            monkey = this.isolation.removeAnimal(monkey.getSpecies(),name);
-            this.enclosure.addAnimal(monkey);
+        if (animal == null) {
+            throw new IllegalArgumentException("Animal is not in our Sanctuary");
         }
+        if(animal.needsMedicalAttention()) {
+            throw new IllegalStateException("Animal needs to be treated first");
+        }
+        animal = this.isolation.removeAnimal(animal.getSpecies(),name);
+        this.enclosure.addAnimal(animal);
+
     }
 
     /**
      * Move the animal from Enclosure to Isolation
      * @param species species of animal to move
      * @param name the name that was used to register this animal
+     * @throws IllegalStateException If the isolation room is full
+     * @throws IllegalArgumentException if the animal doesn't exit in our db
      */
-    public void moveAnimalToIsolation(Species species, String name) {
-        //Check the monkey is ok
-        Animal monkey = this.enclosure.getAnimal(species, name);
-        if (monkey != null) {
-            monkey = this.enclosure.removeAnimal(species, name);
-            this.isolation.addAnimal(monkey);
+    public void moveAnimalToIsolation(Species species, String name) throws IllegalStateException, IllegalArgumentException {
+
+        if(this.isolation.numberOfEmptyRooms() == 0) {
+            throw new IllegalStateException("This animal can not be treated at the moment");
+        }
+
+        Animal animal = this.enclosure.getAnimal(species, name);
+        if (animal != null) {
+            animal = this.enclosure.removeAnimal(species, name);
+            this.isolation.addAnimal(animal);
+        }
+    }
+
+    @Override
+    public int getNumberOfAnimals(char location) {
+        switch (location){
+            case('i'):
+                return this.isolation.getNumberOfAnimalsInHabitat();
+            case('e'):
+                return this.enclosure.getNumberOfAnimalsInHabitat();
+            default:
+                return this.isolation.getNumberOfAnimalsInHabitat() + this.enclosure.getNumberOfAnimalsInHabitat();
         }
     }
 
@@ -99,23 +124,32 @@ public class Sanctuary implements Habitat {
     }
 
     @Override
-    public void printAnimalsNamesInHabitat() {
+    public ArrayList<String> getAnimalsNamesInHabitat() {
         String[] isolated = this.isolation.getMembersNames();
         String[] enclosure = this.enclosure.getMembersNames();
 
         //Group isolated and enclosure monkeys
         ArrayList <String> names = new ArrayList<>(Arrays.asList(enclosure));
         Collections.addAll(names, isolated);
-
-        //Print names in Ascending order
-        System.out.println("\nDisplay animal's names in this sanctuary");
-        for (Object animal: names.stream().sorted().toArray()) System.out.println(animal);
+        Collections.sort(names);
+        return names;
     }
 
     @Override
-    public void provideMedicalAttention (String name) {
+    public void provideMedicalAttention (String name) throws IllegalArgumentException {
         Animal animal = this.isolation.getAnimal(name);
-        if (animal != null) animal.setHealth(100);
+        animal.setHealth(100);
+    }
+
+    public String getAnimalBio(Species species, String name, char location) {
+        Animal animal = null;
+        if (location == 'i') {
+            animal = this.isolation.getAnimal(name);
+        } else if (location == 'e') {
+            animal = this.enclosure.getAnimal(species,name);
+        }
+
+        return animal != null ? animal.toString() : "No Animal";
     }
 
     /**

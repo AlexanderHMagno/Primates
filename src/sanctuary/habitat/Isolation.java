@@ -25,15 +25,17 @@ public class Isolation extends Housing{
     }
 
     @Override
-    public boolean addAnimal(Animal monkey) {
+    public void addAnimal(Animal monkey) throws IllegalStateException {
 
-        if (this.numberOfEmptyRooms() > 0) {
-            if (this.rooms.putIfAbsent(monkey.getName(),monkey) == null) {
-                monkey.setHome(this);
-                return true;
-            }
+        if(this.numberOfEmptyRooms() == 0) {
+            throw new IllegalStateException("Sorry, we are full at the moment and we can't accept more Animals");
         }
-        return false;
+
+        if (this.rooms.putIfAbsent(monkey.getName(),monkey) == null) {
+            monkey.setHome(this);
+        } else {
+            throw new IllegalStateException("There is another animal with the same name please provide a different");
+        }
     }
 
     @Override
@@ -67,8 +69,14 @@ public class Isolation extends Housing{
      * Obtain a one single animal.
      * @param name find the animal by its name
      * @return if Found the animal will be returned. Otherwise, null.
+     * @throws IllegalArgumentException If animal is not in this location
      */
-    public Animal getAnimal(String name) {return this.rooms.get(Monkey.formatName(name));}
+    public Animal getAnimal(String name) throws IllegalArgumentException {
+        Animal animal = this.rooms.get(Monkey.formatName(name));
+
+        if (animal == null) throw new IllegalArgumentException("Animal is not in our Sanctuary");
+        return animal;
+    }
 
     /**
      * get the number of rooms that can provide room to the animals

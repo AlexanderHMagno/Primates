@@ -31,9 +31,10 @@ public abstract class Housing {
     /**
      *Add an animals in this location
      * @param animal representing the animal to be added
-     * @return true if the animal was correctly added to the location
+     * @throws IllegalStateException If the location can not receive more animals
+     *         If there is another animal with the same name in the house
      */
-    public abstract boolean addAnimal(Animal animal);
+    public abstract void addAnimal(Animal animal) throws IllegalStateException;
 
     /**
      * Remove an animal for this location, name and species must be provided

@@ -27,19 +27,25 @@ public class Enclosure extends Housing {
 
     }
 
-
+    /**
+     * Add a new animal to the enclosure
+     * @param animal representing the animal to be added
+     * @throws IllegalStateException If the animal still needs attention
+     */
     @Override
-    public boolean addAnimal(Animal animal) {
+    public void addAnimal(Animal animal) throws IllegalStateException {
 
         //If Monkey doesn't need medical attention
-        if (!animal.needsMedicalAttention()) {
-            TreeMap<String, Animal> location = this.getEnclosure(animal.getSpecies());
-            if (location.putIfAbsent(animal.getName(),animal) == null) {
-                animal.setHome(this);
-                return true;
-            }
+        if (animal.needsMedicalAttention()) {
+            throw  new IllegalStateException("Animal needs attention first");
         }
-        return false;
+
+        TreeMap<String, Animal> location = this.getEnclosure(animal.getSpecies());
+        if (location.putIfAbsent(animal.getName(),animal) == null) {
+            animal.setHome(this);
+        } else {
+            throw new IllegalStateException("There is another animal with the same name please provide a different");
+        }
     }
     @Override
     protected Animal removeAnimal(Species species, String name) {
@@ -97,8 +103,12 @@ public class Enclosure extends Housing {
      * @param species Provide the room that you are looking for
      * @param name find the animal by its name
      * @return if Found the animal will be returned. Otherwise, null.
+     * @throws IllegalArgumentException If animal is not in this location
      */
-    protected Animal getAnimal(Species species, String name) {
-        return this.getEnclosure(species).get(name);
+    protected Animal getAnimal(Species species, String name) throws IllegalArgumentException {
+
+        Animal animal = this.getEnclosure(species).get(name);
+        if (animal == null) throw new IllegalArgumentException("Animal is not in our Sanctuary");
+        return animal;
     }
 }

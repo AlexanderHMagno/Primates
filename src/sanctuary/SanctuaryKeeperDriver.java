@@ -29,7 +29,7 @@ public class SanctuaryKeeperDriver {
 
         //Adding a monkey manually - if You add this one right now it won't be added, there are already 20 monkeys.
         //And Animals must receive valid name, size, weight, age otherwise exception will be thrown
-        jungleFriends.addNewAnimal("Alex", Species.Quereza ,Sex.Male, 1.70 , 70.05, 12 , Food.Fruits);
+        //        jungleFriends.addNewAnimal("Alex", Species.Quereza ,Sex.Male, 1.70 , 70.05, 12 , Food.Fruits);
 
         //Forcing monkeys to move to enclosure (test method)
         // This will cure and move every monkey from isolation to enclosure
@@ -42,7 +42,7 @@ public class SanctuaryKeeperDriver {
         jungleFriends.addNewAnimal("Luka", Species.Tamarin ,Sex.Male, 1.95 , 80.05, 10 , Food.Insects);
 
         //This is the manual way to move animal to enclosure
-//      jungleFriends.moveAnimalToEnclosure("Nata"); // If you try to move an unhealthy animal to enclosure Exception.
+        //      jungleFriends.moveAnimalToEnclosure("Nata"); // If you try to move an unhealthy animal to enclosure Exception.
         jungleFriends.provideMedicalAttention("Nata");
         jungleFriends.moveAnimalToEnclosure("Nata");
 
@@ -51,8 +51,9 @@ public class SanctuaryKeeperDriver {
 
         //Display Animals in habitat (Isolation + Enclosure)
         jungleFriends.printAnimalsInHabitat();
+
         //Display the names of the animals in the habitat
-        jungleFriends.printAnimalsNamesInHabitat();
+        System.out.println(jungleFriends.getAnimalsNamesInHabitat());
     }
 
     /**

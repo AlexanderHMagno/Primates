@@ -35,14 +35,12 @@ public interface Animal {
     Species getSpecies();
 
     /**
-     * Establish a home for this animal, we only handle animals with an habitat
-     * @return void
+     * Establish a home for this animal, we only handle animals with a housing
      */
     void setHome(Housing home);
 
     /**
      * Establish the health of this animal.
-     * @return void
      */
     void setHealth(int health);
 

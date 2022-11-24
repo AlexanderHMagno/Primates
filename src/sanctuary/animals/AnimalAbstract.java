@@ -28,7 +28,7 @@ public abstract class AnimalAbstract implements Animal{
     /**
      * Constructor for animal abstract classes. It has a name, species, sex, size, weight, age, food, health
      * a unique id, and a Home.
-     * @param name - The name of the aniaml
+     * @param name - The name of the animal
      * @param species - The Species of the animal
      * @param sex - Gender of the animal
      * @param size - Size in centimeters
@@ -73,8 +73,8 @@ public abstract class AnimalAbstract implements Animal{
 
 
     /**
-     * Get the weigth of this animal
-     * @return wight of animal in kilogrames
+     * Get the weight of this animal
+     * @return wight of animal in kilograms
      */
     public double getWeight() {
         return weight;
@@ -109,15 +109,31 @@ public abstract class AnimalAbstract implements Animal{
 
     @Override
     public boolean needsMedicalAttention() {
-        return this.health < 80;
+        return getHealth() >= 80;
     }
 
     /**
      * Format the name of the animal to provide a Capitalize name format - e.g. Alex.
      * @param name of the animal, it doesn't matter if it will be all lower or upper case.
-     * @return the formatted name following a Capitalize case e.g provided aLeX -> Alex
+     * @return the formatted name following a Capitalize case e.g. provided aLeX -> Alex
      */
     public static String formatName (String name) {
         return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+
+    @Override
+    public String toString() {
+        return "AnimalAbstract{" +
+                "name='" + getName() + '\'' +
+                ", species=" + getSpecies() +
+                ", sex=" + getSex() +
+                ", size=" + getSize() +
+                ", weight=" + getWeight() +
+                ", age=" + getAge() +
+                ", food=" + getFood() +
+                ", health=" + getHealth() +
+                ", id=" + id +
+                ", home=" + home.getHouseName() +
+                '}';
     }
 }

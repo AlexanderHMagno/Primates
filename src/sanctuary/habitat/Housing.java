@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 /**
  * This is an abstract class that represents the idea of a Housing, this will be used to create the spaces
- * to keep animals in the sanctuary. It has an habitatName.
+ * to keep animals in the sanctuary. It has an housingName.
  */
 public abstract class Housing {
 
-    protected String habitatName;
+    protected String housingName;
 
     /**
      * Print the animals in the house. It will provide the information as follows
@@ -31,7 +31,7 @@ public abstract class Housing {
     /**
      *Add an animals in this location
      * @param animal representing the animal to be added
-     * @returns true if the animal was correctly added to the location
+     * @return true if the animal was correctly added to the location
      */
     public abstract boolean addAnimal(Animal animal);
 
@@ -50,7 +50,14 @@ public abstract class Housing {
      * @return a list of names of the animals in the location
      */
     protected String[] getMembersNames() {
-        return Arrays.stream(this.getAnimals()).map(x -> x.getName()).
-                toArray(String[]::new);
+        return Arrays.stream(this.getAnimals()).map(Animal::getName).toArray(String[]::new);
+    }
+
+    /**
+     * get the name of this house
+     * @return The name of this house
+     */
+    public String getHouseName() {
+        return this.housingName;
     }
 }

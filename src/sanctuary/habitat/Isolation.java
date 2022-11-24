@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class Isolation extends Housing{
 
     private int maxInhabitants;
-    private TreeMap<String, Animal> rooms;
+    private final TreeMap<String, Animal> rooms;
 
     /**
      * Constructor for the Isolation class
@@ -19,9 +19,9 @@ public class Isolation extends Housing{
      * @param habitatName A name that represents this Housing
      */
     public Isolation(int maxInhabitants, String habitatName) {
-        this.maxInhabitants = maxInhabitants;
-        this.habitatName = habitatName;
+        this.housingName = habitatName;
         this.rooms = new TreeMap<>();
+        this.setMaxInhabitants(maxInhabitants);
     }
 
     @Override
@@ -78,5 +78,13 @@ public class Isolation extends Housing{
         return this.maxInhabitants - this.getNumberOfAnimalsInHabitat();
     }
 
-
+    /**
+     * Increase or decrease the size of animals that can be held at the same time
+     * @param max number of animals must be greater than the current number of animals
+     */
+    protected void setMaxInhabitants(int max) {
+        if (max > this.rooms.size()) {
+            this.maxInhabitants = max;
+        }
+    }
 }

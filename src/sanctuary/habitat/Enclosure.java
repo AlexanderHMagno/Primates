@@ -12,7 +12,7 @@ import java.util.TreeMap;
  */
 public class Enclosure extends Housing {
 
-    private TreeMap<Species, TreeMap<String, Animal>> rooms;
+    private final TreeMap<Species, TreeMap<String, Animal>> rooms;
 
     /**
      * Constructor for the enclosure Housing
@@ -22,7 +22,7 @@ public class Enclosure extends Housing {
         //Create an enclosure for each Animal
         this.rooms = new TreeMap<>();
         for (Species s : Species.values()) rooms.put(s, new TreeMap<>());
-        this.habitatName = habitatName;
+        this.housingName = habitatName;
 
     }
 
@@ -31,7 +31,7 @@ public class Enclosure extends Housing {
     public boolean addAnimal(Animal animal) {
 
         //If Monkey doesn't need medical attention
-        if (!animal.needsMedicalAttention()) {
+        if (animal.needsMedicalAttention()) {
             TreeMap<String, Animal> location = this.getEnclosure(animal.getSpecies());
             if (location.putIfAbsent(animal.getName(),animal) == null) {
                 animal.setHome(this);
@@ -85,7 +85,7 @@ public class Enclosure extends Housing {
     /**
      * Obtain the information of a room (place where only one species of animal can live at the same time);
      * @param species Provide the species that you are looking for
-     * @return Obtain the enclosure if found. Otherwise null.
+     * @return Obtain the enclosure if found. Otherwise, null.
      */
     protected TreeMap<String, Animal> getEnclosure(Species species) {
         return rooms.get(species);

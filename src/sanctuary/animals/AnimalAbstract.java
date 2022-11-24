@@ -4,7 +4,7 @@ import sanctuary.habitat.Housing;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
-import java.util.UUID;
+
 
 /**
  * This class represents an abstract animal. It has a name, species, sex, size, weight, age, food, health
@@ -20,8 +20,6 @@ public abstract class AnimalAbstract implements Animal{
     protected final int age;
     protected final Food food;
     protected int health;
-
-    protected UUID id;
     protected Housing home;
 
 
@@ -36,7 +34,14 @@ public abstract class AnimalAbstract implements Animal{
      * @param age - provide the age of the animal
      * @param food - provide the favorite food of this animal
      */
-    public AnimalAbstract(String name, Species species, Sex sex, double size, double weight, int age, Food food) {
+    public AnimalAbstract(String name, Species species, Sex sex,
+                          double size, double weight, int age, Food food) throws IllegalArgumentException  {
+
+        if (name.length() == 0) throw new IllegalArgumentException("Provide a valid name");
+        if (size < 0) throw new IllegalArgumentException("Provide a valid size");
+        if (weight < 0) throw new IllegalArgumentException("Provide a valid weight");
+        if (age < 0) throw new IllegalArgumentException("Provide a valid age");
+
         this.name = AnimalAbstract.formatName(name);
         this.species = species;
         this.sex = sex;
@@ -45,7 +50,6 @@ public abstract class AnimalAbstract implements Animal{
         this.age = age;
         this.food = food;
         this.health = 50;
-        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -100,7 +104,8 @@ public abstract class AnimalAbstract implements Animal{
     }
 
     @Override
-    public void setHealth(int health) {
+    public void setHealth(int health) throws IllegalArgumentException {
+        if (health < 0) throw new IllegalArgumentException("Health can be only a positive value");
         this.health = health;
     }
 
@@ -108,32 +113,41 @@ public abstract class AnimalAbstract implements Animal{
     public void setHome(Housing home) {this.home = home;}
 
     @Override
+    public String getHomeName() {
+        return (home != null ? home.getHouseName() : "Wild animal");
+    }
+    @Override
     public boolean needsMedicalAttention() {
-        return getHealth() >= 80;
+        return getHealth() <= 80;
     }
 
     /**
      * Format the name of the animal to provide a Capitalize name format - e.g. Alex.
+     * Note: This method should live in a different class but for now lets keep it here.
      * @param name of the animal, it doesn't matter if it will be all lower or upper case.
      * @return the formatted name following a Capitalize case e.g. provided aLeX -> Alex
      */
-    public static String formatName (String name) {
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    public static String formatName (String name) throws IllegalArgumentException {
+        if (name.length() == 0) throw new IllegalArgumentException();
+        String formatted = name.substring(0, 1).toUpperCase() ;
+        if (name.length() > 1) {
+            formatted += name.substring(1).toLowerCase();
+        }
+        return formatted;
     }
 
     @Override
     public String toString() {
-        return "AnimalAbstract{" +
-                "name='" + getName() + '\'' +
-                ", species=" + getSpecies() +
-                ", sex=" + getSex() +
-                ", size=" + getSize() +
-                ", weight=" + getWeight() +
-                ", age=" + getAge() +
-                ", food=" + getFood() +
-                ", health=" + getHealth() +
-                ", id=" + id +
-                ", home=" + home.getHouseName() +
-                '}';
+        return "Animal{" +
+                "\nname=" + getName() +
+                ",\nspecies=" + getSpecies() +
+                ",\nsex=" + getSex() +
+                ",\nsize=" + getSize() +
+                ",\nweight=" + getWeight() +
+                ",\nage=" + getAge() +
+                ",\nfood=" + getFood() +
+                ",\nhealth=" + getHealth() +
+                ",\nhome=" + getHomeName() +
+                "\n}";
     }
 }

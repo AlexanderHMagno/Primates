@@ -35,19 +35,29 @@ public interface Animal {
     Species getSpecies();
 
     /**
+     * get the animal's health
+     * @return Animal's health
+     */
+    int getHealth();
+
+    /**
      * Establish a home for this animal, we only handle animals with a housing
      */
     void setHome(Housing home);
 
     /**
+     * Get the housing's name where this animal lives
+     * @return name of the house
+     */
+    String getHomeName ();
+    /**
      * Establish the health of this animal.
      */
-    void setHealth(int health);
+    void setHealth(int health) throws IllegalArgumentException;
 
     /**
      * Do this animal needs medical attention
      * @return true if the animal will needs attention
      */
     boolean needsMedicalAttention ();
-
 }

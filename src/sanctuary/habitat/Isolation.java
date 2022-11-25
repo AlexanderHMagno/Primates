@@ -48,16 +48,20 @@ public class Isolation extends Housing{
     }
 
     @Override
-    public void displayHabitatMembers() {
+    public String displayHabitatMembers() {
+
+        String info = "";
 
         for (Animal animal : this.getAnimals()) {
-            System.out.println(
+            info +=(
                     "Name: " + animal.getName() +
                     ", Sex:" + animal.getSex() +
                     ", Favorite food: " + animal.getFood()
-                    + ", Species: " + animal.getSpecies());
+                    + ", Species: " + animal.getSpecies()
+                    + "\n"
+            );
         }
-
+        return info;
     }
 
     @Override

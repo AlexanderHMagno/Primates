@@ -1,5 +1,6 @@
 package sanctuary.habitat;
 
+import sanctuary.animals.AnimalAbstract;
 import sanctuary.animals.AnimalCreator;
 import sanctuary.animals.Animal;
 import sanctuary.utils.Food;
@@ -33,19 +34,23 @@ public class Sanctuary implements Habitat {
     }
 
     /**
-     * Add an animal to the sanctuary
-     * @param name Name to identify the animal. This will be used to register the animal in the Sanctuary
-     * @param species The type of animal
-     * @param sex - the gender of the animal
-     * @param size - The height of the animal in Centimeters
-     * @param weight - The Weight of the animal in Kilograms
-     * @param age - age of the animal
-     * @param food - Favorite Food of this animal
-     * @throws IllegalStateException If the Shelter is already full
-     * @throws IllegalArgumentException If the information of the animal is not complete and valid
+     * Constructor of sanctuary
+     * @param name This will be the name of this Sanctuary
      */
+    public Sanctuary(String name) {
+        this.enclosure = new Enclosure("Oasis - Enclosure");
+        this.isolation = new Isolation(20, "Soteria - Isolation");
+        this.name = name;
+    }
+
+
+    @Override
     public void addNewAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food)
             throws IllegalStateException, IllegalArgumentException  {
+
+        if (this.getAnimalsNamesInHabitat().contains(AnimalAbstract.formatName(name))) {
+            throw new IllegalStateException("An Animal with this name is already in the sanctuary");
+        }
 
         Animal animal = AnimalCreator.createAnimal(name, species, sex,size, weight, age, food);
 
@@ -53,12 +58,7 @@ public class Sanctuary implements Habitat {
     }
 
 
-    /**
-     * Move the animal from Isolation to Isolation
-     * @param name the name that was used to register this animal
-     * @throws IllegalStateException if the animal is not cured
-     * @throws IllegalArgumentException if the animal doesn't exit in our db
-     */
+    @Override
     public void moveAnimalToEnclosure(String name) throws IllegalStateException, IllegalArgumentException {
 
         //Check the animal is ok
@@ -75,13 +75,7 @@ public class Sanctuary implements Habitat {
 
     }
 
-    /**
-     * Move the animal from Enclosure to Isolation
-     * @param species species of animal to move
-     * @param name the name that was used to register this animal
-     * @throws IllegalStateException If the isolation room is full
-     * @throws IllegalArgumentException if the animal doesn't exit in our db
-     */
+    @Override
     public void moveAnimalToIsolation(Species species, String name) throws IllegalStateException, IllegalArgumentException {
 
         if(this.isolation.numberOfEmptyRooms() == 0) {
@@ -108,19 +102,8 @@ public class Sanctuary implements Habitat {
     }
 
     @Override
-    public void printAnimalsInHabitat() {
-
-        System.out.println("Welcome to " + name + "\nThis is the data information: \n");
-
-        Housing[] houses = new Housing[]{this.isolation, this.enclosure};
-
-        for (Housing home: houses) {
-            if(home.getNumberOfAnimalsInHabitat() > 0) {
-                System.out.println("\n" + home.housingName);
-                System.out.println("Primates in Habitat:" + home.getNumberOfAnimalsInHabitat());
-                home.displayHabitatMembers();
-            }
-        }
+    public String getAnimalsInHabitat() {
+        return toString();
     }
 
     @Override
@@ -141,6 +124,13 @@ public class Sanctuary implements Habitat {
         animal.setHealth(100);
     }
 
+    /**
+     * Get animal Bio in a formatted string
+     * @param species Search for a specific type
+     * @param name Search for the animal by its name
+     * @param location Char search for the animal i - isolation, e - enclosure
+     * @return A formatted string with the animals information
+     */
     public String getAnimalBio(Species species, String name, char location) {
         Animal animal = null;
         if (location == 'i') {
@@ -179,5 +169,21 @@ public class Sanctuary implements Habitat {
     private void moveAllAnimalToEnclosure () {
         String[] isolated = this.isolation.getMembersNames();
         Arrays.stream(isolated).forEach(this::moveAnimalToEnclosure);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder display = new StringBuilder("Welcome to " + name + "\nThis is the data information: \n");
+
+        Housing[] houses = new Housing[]{this.isolation, this.enclosure};
+        for (Housing home: houses) {
+            if(home.getNumberOfAnimalsInHabitat() > 0) {
+                display.append("\n").append(home.housingName).append("\n");
+                display.append("Animals in Habitat:").append(home.getNumberOfAnimalsInHabitat()).append("\n");
+                display.append(home.displayHabitatMembers());
+            }
+        }
+
+        return display.toString();
     }
 }

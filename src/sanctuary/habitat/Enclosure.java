@@ -4,7 +4,6 @@ import sanctuary.animals.Animal;
 import sanctuary.utils.Species;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -52,20 +51,26 @@ public class Enclosure extends Housing {
         return this.getEnclosure(species).remove(name);
     }
     @Override
-    public void displayHabitatMembers() {
+    public String displayHabitatMembers() {
 
+        StringBuilder info = new StringBuilder();
         for (Map.Entry<Species, TreeMap<String, Animal>> subgroup : this.rooms.entrySet()) {
             if (subgroup.getValue().size() > 0) {
-                System.out.println("Species:" + subgroup.getKey());
+                info.append("Species:").append(subgroup.getKey()).append("\n");
                 for (Map.Entry<String, Animal> entry : subgroup.getValue().entrySet()) {
-                    System.out.println(
-                            "Name: " + entry.getKey() +
-                            " Sex:" + entry.getValue().getSex() +
-                            " Favorite food: " + entry.getValue().getFood() +
-                            ", Species: " + entry.getValue().getSpecies());
+                    info.append("Name: ")
+                            .append(entry.getKey())
+                            .append(" Sex:")
+                            .append(entry.getValue().getSex())
+                            .append(" Favorite food: ")
+                            .append(entry.getValue().getFood())
+                            .append(", Species: ")
+                            .append(entry.getValue().getSpecies())
+                            .append("\n");
                 }
             }
         }
+        return info.toString();
     }
     @Override
     public int getNumberOfAnimalsInHabitat() {

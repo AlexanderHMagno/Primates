@@ -15,8 +15,9 @@ public abstract class Housing {
     /**
      * Print the animals in the house. It will provide the information as follows
      * Name, sex, Favorite food and Species
+     * @return list of each animal
      */
-    public abstract void displayHabitatMembers();
+    public abstract String displayHabitatMembers();
 
     /**
      * Get the number of animals in this location

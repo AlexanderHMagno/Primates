@@ -1,7 +1,5 @@
 package sanctuary;
 
-import sanctuary.habitat.Enclosure;
-import sanctuary.habitat.Isolation;
 import sanctuary.habitat.Sanctuary;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
@@ -18,11 +16,8 @@ public class SanctuaryKeeperDriver {
 
     public static void main(String[] args) {
 
-        Enclosure oasis = new Enclosure("Oasis - Enclosure");
-        Isolation soteria = new Isolation(20, "Soteria - Isolation");
-
         //A sanctuary is composed of two types of housing.
-        Sanctuary jungleFriends = new Sanctuary("Jungle Friends Primate Sanctuary", oasis, soteria);
+        Sanctuary jungleFriends = new Sanctuary("Jungle Friends Primate Sanctuary");
 
         //Adding Other 20 Primates (helper method)
         SanctuaryKeeperDriver.addAdditionalAnimals(jungleFriends, "monkeys.txt");
@@ -50,7 +45,7 @@ public class SanctuaryKeeperDriver {
         jungleFriends.moveAnimalToIsolation(Species.Quereza,"Shapito");
 
         //Display Animals in habitat (Isolation + Enclosure)
-        jungleFriends.printAnimalsInHabitat();
+        System.out.println(jungleFriends.getAnimalsInHabitat());
 
         //Display the names of the animals in the habitat
         System.out.println(jungleFriends.getAnimalsNamesInHabitat());

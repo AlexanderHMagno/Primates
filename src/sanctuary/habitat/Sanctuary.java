@@ -131,7 +131,7 @@ public class Sanctuary implements Habitat {
      * @param location Char search for the animal i - isolation, e - enclosure
      * @return A formatted string with the animals information
      */
-    public String getAnimalBio(Species species, String name, char location) {
+    protected String getAnimalBio(Species species, String name, char location) {
         Animal animal = null;
         if (location == 'i') {
             animal = this.isolation.getAnimal(name);

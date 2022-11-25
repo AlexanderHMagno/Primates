@@ -75,7 +75,7 @@ public class Isolation extends Housing{
      * @return if Found the animal will be returned. Otherwise, null.
      * @throws IllegalArgumentException If animal is not in this location
      */
-    public Animal getAnimal(String name) throws IllegalArgumentException {
+    protected Animal getAnimal(String name) throws IllegalArgumentException {
         Animal animal = this.rooms.get(Monkey.formatName(name));
 
         if (animal == null) throw new IllegalArgumentException("Animal is not in our Sanctuary");
@@ -86,7 +86,7 @@ public class Isolation extends Housing{
      * get the number of rooms that can provide room to the animals
      * @return difference between max number of inhabitants and the current animals in location
      */
-    public int numberOfEmptyRooms() {
+    protected int numberOfEmptyRooms() {
         return this.maxInhabitants - this.getNumberOfAnimalsInHabitat();
     }
 

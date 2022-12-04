@@ -94,6 +94,17 @@ public class Enclosure extends Housing {
         return list.toArray(new Animal[0]);
     }
 
+    @Override
+    protected Animal[] getAnimalsEnclosure(Species species) {
+        ArrayList<Animal> list = new ArrayList<>();
+
+        for (Map.Entry<String, Animal> entry : this.getEnclosure(species).entrySet()) {
+            list.add(entry.getValue());
+        }
+
+        return list.toArray(new Animal[0]);
+    }
+
     /**
      * Obtain the information of a room (place where only one species of animal can live at the same time);
      * @param species Provide the species that you are looking for

@@ -48,7 +48,7 @@ public class Sanctuary implements Habitat {
     public void addNewAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food)
             throws IllegalStateException, IllegalArgumentException  {
 
-        if (this.getAnimalsNamesInHabitat().contains(AnimalAbstract.formatName(name))) {
+        if (this.getAnimalsNamesInHabitat('t').contains(AnimalAbstract.formatName(name))) {
             throw new IllegalStateException("An Animal with this name is already in the sanctuary");
         }
 
@@ -79,7 +79,7 @@ public class Sanctuary implements Habitat {
     public void moveAnimalToIsolation(Species species, String name) throws IllegalStateException, IllegalArgumentException {
 
         if(this.isolation.numberOfEmptyRooms() == 0) {
-            throw new IllegalStateException("This animal can not be treated at the moment");
+            throw new IllegalStateException("Isolation is full, please free some space and try again");
         }
 
         Animal animal = this.enclosure.getAnimal(species, name);
@@ -107,15 +107,41 @@ public class Sanctuary implements Habitat {
     }
 
     @Override
-    public ArrayList<String> getAnimalsNamesInHabitat() {
+    public ArrayList<String> getAnimalsNamesInHabitat(char location) {
+
         String[] isolated = this.isolation.getMembersNames();
         String[] enclosure = this.enclosure.getMembersNames();
 
         //Group isolated and enclosure monkeys
-        ArrayList <String> names = new ArrayList<>(Arrays.asList(enclosure));
-        Collections.addAll(names, isolated);
+        ArrayList <String> names = new ArrayList<>();
+
+        switch (location) {
+            case 'e':
+                Collections.addAll(names, enclosure);
+                break;
+            case 'i':
+                System.out.println("here i am");
+                Collections.addAll(names, isolated);
+                break;
+            case 't':
+            default:
+                Collections.addAll(names, enclosure);
+                Collections.addAll(names, isolated);
+                break;
+        }
+        System.out.println(location);
         Collections.sort(names);
         return names;
+    }
+
+    @Override
+    public String[] displayAnimalsInEnclosureGroup(Species species) {
+        return this.enclosure.getMembersNames(species);
+    }
+
+    @Override
+    public String getFavoriteFood(Species species, String name) {
+         return this.enclosure.getAnimal(species,name).getFood().toString();
     }
 
     @Override
@@ -131,7 +157,7 @@ public class Sanctuary implements Habitat {
      * @param location Char search for the animal i - isolation, e - enclosure
      * @return A formatted string with the animals information
      */
-    protected String getAnimalBio(Species species, String name, char location) {
+    public String getAnimalBio(Species species, String name, char location) {
         Animal animal = null;
         if (location == 'i') {
             animal = this.isolation.getAnimal(name);

@@ -19,8 +19,10 @@ public class Monkey extends AnimalAbstract {
      * @param weight - weight in kilos
      * @param age - provide the age of the monkey
      * @param food - provide the favorite food of this monkey
+     * @throws  IllegalArgumentException If any argument doesnt follow guidelines
      */
-    public Monkey(String name, Species species, Sex sex, double size, double weight, int age, Food food) {
+    public Monkey(String name, Species species, Sex sex, double size, double weight, int age, Food food)
+            throws IllegalArgumentException  {
         super(name,species,sex,size,weight,age,food);
     }
 

@@ -33,11 +33,12 @@ public abstract class AnimalAbstract implements Animal{
      * @param weight - weight in kilos
      * @param age - provide the age of the animal
      * @param food - provide the favorite food of this animal
+     * @throws IllegalArgumentException If the information is not correct
      */
     public AnimalAbstract(String name, Species species, Sex sex,
                           double size, double weight, int age, Food food) throws IllegalArgumentException  {
 
-        if (name.length() == 0) throw new IllegalArgumentException("Provide a valid name");
+        if (name.trim().length() == 0) throw new IllegalArgumentException("Please, Provide a valid and unique name");
         if (size < 0) throw new IllegalArgumentException("Provide a valid size");
         if (weight < 0) throw new IllegalArgumentException("Provide a valid weight");
         if (age < 0) throw new IllegalArgumentException("Provide a valid age");
@@ -138,16 +139,16 @@ public abstract class AnimalAbstract implements Animal{
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "\nname=" + getName() +
-                ",\nspecies=" + getSpecies() +
-                ",\nsex=" + getSex() +
-                ",\nsize=" + getSize() +
-                ",\nweight=" + getWeight() +
-                ",\nage=" + getAge() +
-                ",\nfood=" + getFood() +
-                ",\nhealth=" + getHealth() +
-                ",\nhome=" + getHomeName() +
-                "\n}";
+        return
+                "\nName: " + getName() +
+                ",\nSpecies: " + getSpecies() +
+                ",\nSex: " + getSex() +
+                ",\nSize: " + getSize() +
+                ",\nWeight: " + getWeight() +
+                ",\nAge: " + getAge() +
+                ",\nFood: " + getFood() +
+                ",\nHealth: " + getHealth() +
+                ",\nHome: " + getHomeName() +
+                "\n";
     }
 }

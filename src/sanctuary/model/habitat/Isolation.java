@@ -69,6 +69,11 @@ public class Isolation extends Housing{
         return this.rooms.values().toArray(new Animal[0]);
     }
 
+    @Override
+    protected Animal[] getAnimalsEnclosure(Species species) {
+        return new Animal[0];
+    }
+
     /**
      * Obtain a one single animal.
      * @param name find the animal by its name

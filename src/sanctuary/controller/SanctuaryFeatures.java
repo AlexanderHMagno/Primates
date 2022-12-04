@@ -28,19 +28,17 @@ public interface SanctuaryFeatures {
     /**
      * Transfer an animal to enclosure from isolation
      * @param animal name of the animal to move to the enclosure.
-     * @return true if the animal was successfully moved
      * @throws IllegalStateException The animal is not healthy
      * @throws IllegalArgumentException the animal is not register with us
      */
-    boolean transferAnimalToEnclosure(String animal) throws IllegalStateException, IllegalArgumentException;
+    void transferAnimalToEnclosure(String animal) throws IllegalStateException, IllegalArgumentException;
 
     /**
      * Transfer an animal to  isolation from enclosure
      * @param animal name of the animal to move to the Isolation.
-     * @return true if the animal was successfully moved
      * @throws IllegalArgumentException the animal is not register with us
      */
-    boolean transferAnimalToIsolation(String animal) throws IllegalArgumentException ;
+    void transferAnimalToIsolation(Species species,String animal) throws IllegalArgumentException ;
 
     /**
      * Provide medical attention
@@ -65,7 +63,7 @@ public interface SanctuaryFeatures {
      * Provide a list of all animals in sanctuary by name
      * @return
      */
-    ArrayList<String> displayAllAnimalsNames();
+    ArrayList<String> displayAllAnimalsNames(char location);
 
 
     /**
@@ -73,12 +71,21 @@ public interface SanctuaryFeatures {
      */
     void closeProgram();
 
+    void updateDashboard();
+
     /**
      * Run the program
      */
     void go();
 
 
+    void updateIsolation();
 
+    void updateEnclosure();
 
+    String getAnimalBio(Species species,String text, char location);
+
+    String[] displayAnimalsInEnclosureGroup(Species species);
+
+    String getFavoriteFood(Species valueOf, String selectedValue);
 }

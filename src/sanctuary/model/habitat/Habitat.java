@@ -22,7 +22,9 @@ public interface Habitat {
      * Produce an alphabetical list (by name) of all  animals housed in the Sanctuary.
      * @return a list of names
      */
-    ArrayList<String> getAnimalsNamesInHabitat();
+    ArrayList<String> getAnimalsNamesInHabitat(char location);
+
+    String[] displayAnimalsInEnclosureGroup(Species species);
 
     /**
      * Increase the health of an animal
@@ -69,4 +71,8 @@ public interface Habitat {
      * @throws IllegalArgumentException if the animal doesn't exit in our db
      */
     void moveAnimalToIsolation(Species species, String name) throws IllegalStateException, IllegalArgumentException;
+
+    String getAnimalBio(Species species, String text, char location);
+
+    String getFavoriteFood(Species valueOf, String selectedValue);
 }

@@ -1,12 +1,16 @@
 package sanctuary.view;
 
+import sanctuary.controller.SanctuaryFeatures;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
@@ -18,6 +22,14 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
     private JScrollPane scrollPane;
     private JTextField input;
     private JTextArea dashboardInfo;
+    private JPanel isolationArea;
+    private JTextArea isolationBio;
+    private JLabel isolationBioTitle;
+    private JTextArea enclosureBio;
+    private JLabel enclosureBioTitle;
+    private SanctuaryFeatures features;
+
+    private DefaultListModel<String> l1 = new DefaultListModel<>();
 
     public SanctuaryAnimalView() {
         super();
@@ -72,6 +84,23 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         tabs.add("Isolation",createIsolationFolder());
         tabs.add("Enclosure",createEnclosureFolder());
 
+        tabs.addChangeListener((ChangeEvent e) -> {
+
+                switch (tabs.getSelectedIndex()) {
+                    case 0:
+                        features.updateDashboard();
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+                        features.updateIsolation();
+                        break;
+                    case 3:
+                        features.updateEnclosure();
+                        break;
+                }
+        });
 
         this.add(tabs);
 
@@ -86,6 +115,10 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         this.setVisible(true);
     }
 
+    public void addFeatures(SanctuaryFeatures features){
+        this.features = features;
+    }
+
 
 
     @Override
@@ -96,6 +129,11 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
 
     public void showErrorMessage(String error) {
         JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    public void showInfoMessage(String info) {
+        JOptionPane.showMessageDialog(this, info, "Food Food", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -116,14 +154,59 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         dashboardInfo.setSize(900, 500);
 
         dashboardInfo.setLocation(200, 200);
+        dashboardInfo.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.add(dashboardInfo);
-
         return panel;
 
     }
 
     public void setDashboardInfo(String text){
         this.dashboardInfo.setText(text);
+    }
+
+    public void updateEnclosureArea() {
+
+        enclosureBioTitle.setText("Members");
+        enclosureBio.setText("");
+        l1.removeAllElements();
+    }
+    public void updateIsolationArea() {
+
+        ArrayList<String> animalsIsolation = features.displayAllAnimalsNames('i');
+        isolationArea.removeAll();
+        isolationBio.setText("");
+        isolationBioTitle.setText("");
+        for (String monkey : animalsIsolation) {
+            JButton jail = new JButton();
+            jail.setText(monkey);
+            jail.setSize(500,500);
+            jail.setSize(new Dimension(400,400));
+            jail.setForeground(new Color(32, 137, 203));
+            jail.addActionListener(e-> {
+                isolationBio.setText(features.getAnimalBio(Species.Howler,monkey,'i'));
+                isolationBioTitle.setText(monkey);
+            });
+            isolationArea.add(jail);
+        }
+
+
+
+
+        int emptyFields = 20 - animalsIsolation.size();
+
+        for (int i = 0; i < emptyFields; i++) {
+            JButton jail = new JButton();
+            jail.setText("Empty");
+            jail.setSize(500,500);
+            jail.setForeground(new Color(32, 137, 203));
+            jail.addActionListener(e-> {
+                isolationBio.setText("Empty");
+                isolationBioTitle.setText("");
+            });
+
+            isolationArea.add(jail);
+        }
+
     }
     private JPanel createIsolationFolder() {
         JPanel panel = new JPanel();
@@ -137,29 +220,52 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
 
         //Display Monkeys Isolation
 
-        JPanel isolationArea = new JPanel();
+        isolationArea = new JPanel(new GridLayout(4,4,4,4));
         isolationArea.setSize(400, 300);
-        isolationArea.setLocation(200,  200);
-
-        for (int i = 0; i < 20 ; i++) {
-            JButton jail = new JButton();
-            jail.setText("Monkey " + (i + 1));
-            isolationArea.add(jail);
-        }
+        isolationArea.setLocation(250, 200);
 
         panel.add(isolationArea);
 
-        JTextArea area1 = new JTextArea();
-        area1.setSize(300, 350);
-        area1.setLocation(900, 200);
-        panel.add(area1);
+        isolationBio = new JTextArea();
+        isolationBio.setSize(300, 250);
+        isolationBio.setLocation(900, 200);
+        isolationBio.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        isolationBioTitle = new JLabel();
+        isolationBioTitle.setSize(100, 50);
+        isolationBioTitle.setLocation(900, 250);
+
+        panel.add(isolationBio);
+        panel.add(isolationBioTitle);
 
         JButton moveButton = new JButton("Move to Enclosure");
         moveButton.setSize(200, 30);
         moveButton.setLocation(250, 550);
+        moveButton.addActionListener(e-> {
+            String name = isolationBioTitle.getText();
+
+            try {
+
+                features.transferAnimalToEnclosure(name);
+                features.updateIsolation();
+            } catch (IllegalStateException f) {
+                showErrorMessage(f.getMessage());
+            }
+        });
         panel.add(moveButton);
 
         JButton actionButton = new JButton("Provide Medical Attention (PMA)");
+        actionButton.addActionListener(e -> {
+            String name = isolationBioTitle.getText();
+
+            try{
+                features.provideMedicalAttention(name);
+                isolationBio.setText(features.getAnimalBio(Species.Howler,name,'i'));
+            } catch (IllegalStateException f){
+                showErrorMessage(f.getMessage());
+            }
+
+        });
         actionButton.setSize(200, 30);
         actionButton.setLocation(450, 550);
         panel.add(actionButton);
@@ -178,24 +284,89 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         panel.add(title);
 
         //Habitat
-        JPanel enclosureArea = new JPanel();
+        JPanel enclosureArea = new JPanel(new GridLayout(4,4,4,4));
         enclosureArea.setSize(400, 300);
-        enclosureArea.setLocation(200,  200);
+        enclosureArea.setLocation(250,  200);
 
-        for (String group: this.getNames(Species.class)) {
-            JButton subGroup = new JButton();
-            subGroup.setText(group);
-            enclosureArea.add(subGroup);
-        }
+
 
         panel.add(enclosureArea);
 
+        enclosureBio = new JTextArea();
+        enclosureBio.setSize(300, 250);
+        enclosureBio.setLocation(900, 200);
+        enclosureBio.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        enclosureBioTitle = new JLabel("Members");
+        enclosureBioTitle.setSize(200, 30);
+        enclosureBioTitle.setLocation(700, 200);
+        enclosureBioTitle.setFont(new Font("Arial", Font.BOLD, 20));
+
+
+
+        for (String group: this.getNames(Species.class)) {
+            JButton subGroup = new JButton();
+            subGroup.setSize(500,500);
+            subGroup.setSize(new Dimension(400,400));
+            subGroup.setBackground(new Color(32, 137, 203));
+            subGroup.setMaximumSize(new Dimension(400, 400));
+            subGroup.setForeground(new Color(206, 50, 50));
+            subGroup.setText(group);
+
+            subGroup.addActionListener(x -> {
+                enclosureBioTitle.setText(group);
+                updateAnimalsInGroup(group);
+                enclosureBio.setText("");
+
+            });
+            enclosureArea.add(subGroup);
+        }
+
+        JList<String> list = new JList<>(l1);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        list.addListSelectionListener(x -> {
+            String data = list.getSelectedValue();
+            if (data != null) {
+                enclosureBio.setText(features.getAnimalBio(Species.valueOf(enclosureBioTitle.getText()), data, 'e'));
+            }
+
+        });
+
+        list.setSize(150,150);
+
+        list.setBorder(new EmptyBorder(10, 10, 10, 10));
+        list.setLocation(700,250);
+
+
+        panel.add(enclosureBio);
+        panel.add(enclosureBioTitle);
+        panel.add(list);
+
+
         JButton moveButton = new JButton("Move to Isolation");
+        moveButton.addActionListener(x-> {
+            try {
+                features.transferAnimalToIsolation(Species.valueOf(enclosureBioTitle.getText()), list.getSelectedValue() );
+                updateAnimalsInGroup(enclosureBioTitle.getText());
+                enclosureBio.setText("");
+            } catch (IllegalStateException f) {
+                showErrorMessage(f.getMessage());
+            }
+
+        });
         moveButton.setSize(200, 30);
         moveButton.setLocation(250, 550);
         panel.add(moveButton);
 
         JButton actionButton = new JButton("Feed");
+        actionButton.addActionListener(x-> {
+
+            showInfoMessage("Ook-ook! \n" +
+                    features.getFavoriteFood(Species.valueOf(enclosureBioTitle.getText()), list.getSelectedValue())
+                    + "\nEeek-aak-eek!"
+            );
+        });
         actionButton.setSize(200, 30);
         actionButton.setLocation(450, 550);
         panel.add(actionButton);
@@ -211,6 +382,13 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         p2.setLayout(null);
         JLabel nameL, sexL, speciesL, sizeL, weightL, ageL, foodL, title;
         JComboBox sexC, speciesC,foodC;
+
+        title = new JLabel("Add new Monkey");
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setSize(400, 100);
+        title.setLocation(600, 50);
+
+        p2.add(title);
 
         //name
         JTextField name = new JTextField("",15);
@@ -289,34 +467,76 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         p2.add(ageL);
         p2.add(ageC);
 
-        JButton createButton = new JButton("Add Animal");
-        createButton.setSize(200, 30);
-        createButton.setLocation(250, 550);
-        p2.add(createButton);
-
-        JButton resetButton = new JButton("Reset");
-        resetButton.setSize(200, 30);
-        resetButton.setLocation(450, 550);
-        p2.add(resetButton);
 
 
         JTextArea area1 = new JTextArea();
         area1.setSize(300, 250);
         area1.setLocation(900, 200);
+        area1.setEnabled(false);
+        area1.setBorder(new EmptyBorder(10, 10, 10, 10));
+        area1.setOpaque(true);
         p2.add(area1);
 
         JTextArea areaResponse =new JTextArea();
         areaResponse.setSize(300, 100);
+        areaResponse.setEnabled(false);
+        areaResponse.setLineWrap(true);
+        areaResponse.setWrapStyleWord(true);
+        areaResponse.setBorder(new EmptyBorder(10, 10, 10, 10));
         areaResponse.setLocation(900, 500);
 
         p2.add(areaResponse);
 
-        title = new JLabel("Add new Monkey");
-        title.setFont(new Font("Arial", Font.BOLD, 30));
-        title.setSize(400, 100);
-        title.setLocation(600, 50);
 
-        p2.add(title);
+
+        JButton createButton = new JButton("Add Animal");
+        createButton.setSize(200, 30);
+        createButton.setLocation(250, 550);
+        createButton.addActionListener(e -> {
+
+            try{
+                String nameF = name.getText().trim().length() > 0 ? name.getText() : " ";
+                features.addAnimal(
+                        nameF,
+                        Species.valueOf(speciesC.getSelectedItem().toString()),
+                        Sex.valueOf(sexC.getSelectedItem().toString()),
+                        (double) sizeC.getValue(),
+                        (double) weightC.getValue(),
+                        (int) ageC.getValue(),
+                        Food.valueOf(foodC.getSelectedItem().toString())
+                );
+
+
+                area1.setText(features.getAnimalBio(Species.valueOf(speciesC.getSelectedItem().toString()),name.getText(),'i'));
+
+                name.setText("");
+                areaResponse.setText("Monkey has been accepted");
+            } catch (IllegalArgumentException userError) {
+                areaResponse.setText(userError.getMessage());
+            } catch (IllegalStateException adminError) {
+                areaResponse.setText(adminError.getMessage());
+            }
+
+
+        });
+        p2.add(createButton);
+
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> {
+            name.setText("");
+            speciesC.setSelectedIndex(0);
+            sexC.setSelectedIndex(0);
+            sizeC.setValue(0);
+            weightC.setValue(0);
+            ageC.setValue(0);
+            foodC.setSelectedIndex(0);
+
+            areaResponse.setText("");
+            area1.setText("");
+        });
+        resetButton.setSize(200, 30);
+        resetButton.setLocation(450, 550);
+        p2.add(resetButton);
 
 //        tp.setBounds(150,250,100,200);
 
@@ -324,6 +544,12 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
 
     }
 
+    private void updateAnimalsInGroup(String group) {
+        l1.removeAllElements();
+        for (String en :features.displayAnimalsInEnclosureGroup(Species.valueOf(group)) ) {
+            l1.addElement(en);
+        }
+    }
     /**
      * Get the names on Enums as an array of strings
      * @param e enum.class

@@ -30,6 +30,10 @@ public abstract class Housing {
     protected abstract Animal[] getAnimals();
 
     /**
+     * Get the animals per enclosure
+     */
+    protected abstract Animal[] getAnimalsEnclosure(Species species);
+    /**
      *Add an animals in this location
      * @param animal representing the animal to be added
      * @throws IllegalStateException If the location can not receive more animals
@@ -53,6 +57,14 @@ public abstract class Housing {
      */
     protected String[] getMembersNames() {
         return Arrays.stream(this.getAnimals()).map(Animal::getName).toArray(String[]::new);
+    }
+
+    /**
+     * Get the list of the names in this location.
+     * @return a list of names of the animals in the location
+     */
+    protected String[] getMembersNames(Species species) {
+        return Arrays.stream(this.getAnimalsEnclosure(species)).map(Animal::getName).toArray(String[]::new);
     }
 
     /**

@@ -22,7 +22,7 @@ public class SanctuaryKeeperDriver {
     public static void main(String[] args) {
 
         Habitat model = new Sanctuary("Jungle Friends Primate Sanctuary");
-        SanctuaryKeeperDriver.addAdditionalAnimals(model, "monkeys.txt");
+
         SanctuaryView view = new SanctuaryAnimalView();
         SanctuaryFeatures controller = new SanctuaryController(model,view);
         controller.go();

@@ -165,7 +165,7 @@ public class SanctuaryTest {
         String[] expected ={"Albert", "Andres", "Bulma", "Einstein", "Eureka", "Francis", "Goku", "Jaki",
                 "Karen", "Lino", "Lolocu", "Magali", "Malandro", "Naruto", "Navdeep", "Romero", "Romulo",
                 "Rosita", "Sebastian", "Shapito"};
-        ArrayList<String> actual = fullFriends.getAnimalsNamesInHabitat();
+        ArrayList<String> actual = fullFriends.getAnimalsNamesInHabitat('t');
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i],actual.get(i));
         }

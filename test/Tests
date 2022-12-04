@@ -1,2 +1,0 @@
-1) adding a new monkey with the same name should throw an Illegal Exception, trying to add a monkey with the same name
-2) make sure when getting a primate it can not be changed they info

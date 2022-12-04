@@ -1,8 +1,8 @@
-package sanctuary.habitat;
+package sanctuary.model.habitat;
 
-import sanctuary.animals.AnimalAbstract;
-import sanctuary.animals.AnimalCreator;
-import sanctuary.animals.Animal;
+import sanctuary.model.habitat.animals.AnimalAbstract;
+import sanctuary.model.habitat.animals.AnimalCreator;
+import sanctuary.model.habitat.animals.Animal;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;

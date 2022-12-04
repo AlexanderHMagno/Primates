@@ -1,4 +1,4 @@
-package sanctuary.habitat;
+package sanctuary.model.habitat;
 
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;

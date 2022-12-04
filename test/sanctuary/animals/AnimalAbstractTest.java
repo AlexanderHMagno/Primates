@@ -2,6 +2,9 @@ package sanctuary.animals;
 
 import org.junit.Before;
 import org.junit.Test;
+import sanctuary.model.habitat.animals.Animal;
+import sanctuary.model.habitat.animals.AnimalAbstract;
+import sanctuary.model.habitat.animals.Monkey;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;

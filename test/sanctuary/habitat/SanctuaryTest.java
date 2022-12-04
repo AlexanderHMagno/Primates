@@ -1,6 +1,9 @@
 package sanctuary.habitat;
 
 import sanctuary.SanctuaryKeeperDriver;
+import sanctuary.model.habitat.Enclosure;
+import sanctuary.model.habitat.Isolation;
+import sanctuary.model.habitat.Sanctuary;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;

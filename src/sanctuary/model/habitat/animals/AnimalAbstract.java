@@ -1,6 +1,6 @@
-package sanctuary.animals;
+package sanctuary.model.habitat.animals;
 
-import sanctuary.habitat.Housing;
+import sanctuary.model.habitat.Housing;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;

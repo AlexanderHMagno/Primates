@@ -1,9 +1,14 @@
 package sanctuary;
 
-import sanctuary.habitat.Sanctuary;
+import sanctuary.controller.SanctuaryController;
+import sanctuary.controller.SanctuaryFeatures;
+import sanctuary.model.habitat.Habitat;
+import sanctuary.model.habitat.Sanctuary;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
+import sanctuary.view.SanctuaryAnimalView;
+import sanctuary.view.SanctuaryView;
 
 import java.io.*;
 import java.util.Scanner;
@@ -16,39 +21,13 @@ public class SanctuaryKeeperDriver {
 
     public static void main(String[] args) {
 
-        //A sanctuary is composed of two types of housing.
-        Sanctuary jungleFriends = new Sanctuary("Jungle Friends Primate Sanctuary");
+        Habitat model = new Sanctuary("Jungle Friends Primate Sanctuary");
+        SanctuaryKeeperDriver.addAdditionalAnimals(model, "monkeys.txt");
+        SanctuaryView view = new SanctuaryAnimalView();
+        SanctuaryFeatures controller = new SanctuaryController(model,view);
+        controller.go();
 
-        //Adding Other 20 Primates (helper method)
-        SanctuaryKeeperDriver.addAdditionalAnimals(jungleFriends, "monkeys.txt");
 
-        //Adding a monkey manually - if You add this one right now it won't be added, there are already 20 monkeys.
-        //And Animals must receive valid name, size, weight, age otherwise exception will be thrown
-        //        jungleFriends.addNewAnimal("Alex", Species.Quereza ,Sex.Male, 1.70 , 70.05, 12 , Food.Fruits);
-
-        //Forcing monkeys to move to enclosure (test method)
-        // This will cure and move every monkey from isolation to enclosure
-        jungleFriends.moveForceToEnclosure();
-
-        //Isolation has room you can add more - create 3 more monkeys manually
-        //Note: Name must be different for each animal
-        jungleFriends.addNewAnimal("Alex", Species.Quereza ,Sex.Male, 1.70 , 70.05, 12 , Food.Fruits);
-        jungleFriends.addNewAnimal("Nata", Species.Quereza ,Sex.Female, 1.65 , 50.05, 12 , Food.Nuts);
-        jungleFriends.addNewAnimal("Luka", Species.Tamarin ,Sex.Male, 1.95 , 80.05, 10 , Food.Insects);
-
-        //This is the manual way to move animal to enclosure
-        //      jungleFriends.moveAnimalToEnclosure("Nata"); // If you try to move an unhealthy animal to enclosure Exception.
-        jungleFriends.provideMedicalAttention("Nata");
-        jungleFriends.moveAnimalToEnclosure("Nata");
-
-        //You can also move back Animals to Isolation
-        jungleFriends.moveAnimalToIsolation(Species.Quereza,"Shapito");
-
-        //Display Animals in habitat (Isolation + Enclosure)
-        System.out.println(jungleFriends.getAnimalsInHabitat());
-
-        //Display the names of the animals in the habitat
-        System.out.println(jungleFriends.getAnimalsNamesInHabitat());
     }
 
     /**
@@ -56,7 +35,7 @@ public class SanctuaryKeeperDriver {
      * @param sanctuary The habitat that you want to add these animals
      * @param group the name of the file in utils with the list of animals to add
      */
-    public static void addAdditionalAnimals(Sanctuary sanctuary, String group) {
+    public static void addAdditionalAnimals(Habitat sanctuary, String group) {
 
         try {
             File file = new File("src/sanctuary/utils/" +  group);

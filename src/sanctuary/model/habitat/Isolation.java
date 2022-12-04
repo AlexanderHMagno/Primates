@@ -1,7 +1,7 @@
-package sanctuary.habitat;
+package sanctuary.model.habitat;
 
-import sanctuary.animals.Monkey;
-import sanctuary.animals.Animal;
+import sanctuary.model.habitat.animals.Monkey;
+import sanctuary.model.habitat.animals.Animal;
 import sanctuary.utils.Species;
 import java.util.TreeMap;
 

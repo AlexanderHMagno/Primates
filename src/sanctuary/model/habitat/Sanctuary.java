@@ -153,11 +153,11 @@ public class Sanctuary implements Habitat {
         String[] response = new String[2];
 
         if(isolation.indexOf(name) != -1) {
-            response[0] = "Isolation";
+            response[0] = this.isolation.housingName;
             response[1] = this.getAnimalBio(Species.Quereza, name, 'i');
             return response;
         } else if(enclosure.indexOf(name) != -1) {
-            response[0] = "Enclosure";
+            response[0] = this.enclosure.housingName;
             response[1] =  this.enclosure.getAnimalBioByName(name);
             return response;
         } else {
@@ -238,7 +238,6 @@ public class Sanctuary implements Habitat {
                 display.append(home.displayHabitatMembers());
             }
         }
-
         return display.toString();
     }
 }

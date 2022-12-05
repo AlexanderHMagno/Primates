@@ -11,7 +11,7 @@ public interface SanctuaryView {
 
     void setDashboardInfo(String text);
 
-    void addFeatures(SanctuaryFeatures features);
+    void packView(SanctuaryFeatures features);
 
     void updateIsolationArea();
 

@@ -65,9 +65,6 @@ public class Sanctuary implements Habitat {
         //Check the animal is ok
         Animal animal = this.isolation.getAnimal(name);
 
-        if (animal == null) {
-            throw new IllegalArgumentException("Animal is not in our Sanctuary");
-        }
         if(animal.needsMedicalAttention()) {
             throw new IllegalStateException("Animal needs to be treated first");
         }
@@ -82,6 +79,7 @@ public class Sanctuary implements Habitat {
         if(this.isolation.numberOfEmptyRooms() == 0) {
             throw new IllegalStateException("Isolation is full, please free some space and try again");
         }
+        if(name.trim().length() == 0) throw new IllegalArgumentException("No Animal detected");
 
         Animal animal = this.enclosure.getAnimal(species, name);
         if (animal != null) {
@@ -164,6 +162,11 @@ public class Sanctuary implements Habitat {
             throw new IllegalArgumentException(name + " is not in this sanctuary");
         }
 
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

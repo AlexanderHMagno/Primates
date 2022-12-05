@@ -81,6 +81,7 @@ public class Isolation extends Housing{
      * @throws IllegalArgumentException If animal is not in this location
      */
     protected Animal getAnimal(String name) throws IllegalArgumentException {
+        if (name.trim().length() == 0) throw new IllegalArgumentException("No Animal Detected");
         Animal animal = this.rooms.get(Monkey.formatName(name));
 
         if (animal == null) throw new IllegalArgumentException("Animal is not in our Sanctuary");

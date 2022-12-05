@@ -1,6 +1,5 @@
 package sanctuary.controller;
 
-import sanctuary.SanctuaryKeeperDriver;
 import sanctuary.model.habitat.Habitat;
 import sanctuary.model.habitat.animals.Animal;
 import sanctuary.utils.Food;
@@ -33,6 +32,7 @@ public class SanctuaryController implements SanctuaryFeatures{
 
     @Override
     public void transferAnimalToEnclosure(String animal) throws IllegalStateException, IllegalArgumentException {
+        if(animal.trim().length() == 0) throw new IllegalArgumentException("No Animal detected");
         this.model.moveAnimalToEnclosure(animal);
     }
 
@@ -49,6 +49,11 @@ public class SanctuaryController implements SanctuaryFeatures{
     @Override
     public String[] searchAnimalByName(String searched) {
         return this.model.getAnimalBioByName(searched);
+    }
+
+    @Override
+    public String sanctuaryName() {
+        return this.model.getName();
     }
 
     @Override
@@ -79,8 +84,7 @@ public class SanctuaryController implements SanctuaryFeatures{
 
     @Override
     public void go() {
-
-        this.view.addFeatures(this);
+        this.view.packView(this);
         this.view.makeVisible();
         this.updateDashboard();
     }

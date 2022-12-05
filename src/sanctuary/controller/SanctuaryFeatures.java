@@ -90,4 +90,6 @@ public interface SanctuaryFeatures {
     String getFavoriteFood(Species valueOf, String selectedValue);
 
     String[] searchAnimalByName(String searched);
+
+    String sanctuaryName();
 }

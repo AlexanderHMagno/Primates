@@ -104,4 +104,8 @@ public class Isolation extends Housing{
             this.maxInhabitants = max;
         }
     }
+
+    public String getAnimalBioByName(String name) {
+        return "Isolation";
+    }
 }

@@ -75,4 +75,6 @@ public interface Habitat {
     String getAnimalBio(Species species, String text, char location);
 
     String getFavoriteFood(Species valueOf, String selectedValue);
+
+    String[] getAnimalBioByName(String searched) throws IllegalArgumentException;
 }

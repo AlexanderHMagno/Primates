@@ -47,6 +47,11 @@ public class SanctuaryController implements SanctuaryFeatures{
     }
 
     @Override
+    public String[] searchAnimalByName(String searched) {
+        return this.model.getAnimalBioByName(searched);
+    }
+
+    @Override
     public void provideMedicalAttention(String animal) {
         this.model.provideMedicalAttention(animal);
     }
@@ -77,7 +82,7 @@ public class SanctuaryController implements SanctuaryFeatures{
 
         this.view.addFeatures(this);
         this.view.makeVisible();
-//        this.updateDashboard();
+        this.updateDashboard();
     }
 
     @Override

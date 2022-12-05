@@ -134,7 +134,7 @@ public abstract class AnimalAbstract implements Animal{
         if (name.length() > 1) {
             formatted += name.substring(1).toLowerCase();
         }
-        return formatted;
+        return formatted.trim();
     }
 
     @Override

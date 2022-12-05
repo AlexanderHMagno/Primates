@@ -3,6 +3,7 @@ package sanctuary.model.habitat;
 import sanctuary.model.habitat.animals.AnimalAbstract;
 import sanctuary.model.habitat.animals.AnimalCreator;
 import sanctuary.model.habitat.animals.Animal;
+import sanctuary.model.habitat.animals.Monkey;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
@@ -120,7 +121,6 @@ public class Sanctuary implements Habitat {
                 Collections.addAll(names, enclosure);
                 break;
             case 'i':
-                System.out.println("here i am");
                 Collections.addAll(names, isolated);
                 break;
             case 't':
@@ -129,7 +129,6 @@ public class Sanctuary implements Habitat {
                 Collections.addAll(names, isolated);
                 break;
         }
-        System.out.println(location);
         Collections.sort(names);
         return names;
     }
@@ -142,6 +141,29 @@ public class Sanctuary implements Habitat {
     @Override
     public String getFavoriteFood(Species species, String name) {
          return this.enclosure.getAnimal(species,name).getFood().toString();
+    }
+
+    @Override
+    public String[] getAnimalBioByName(String searched) throws IllegalArgumentException {
+
+        String name = Monkey.formatName(searched);
+
+        ArrayList<String> isolation = this.getAnimalsNamesInHabitat('i');
+        ArrayList<String> enclosure = this.getAnimalsNamesInHabitat('e');
+        String[] response = new String[2];
+
+        if(isolation.indexOf(name) != -1) {
+            response[0] = "Isolation";
+            response[1] = this.getAnimalBio(Species.Quereza, name, 'i');
+            return response;
+        } else if(enclosure.indexOf(name) != -1) {
+            response[0] = "Enclosure";
+            response[1] =  this.enclosure.getAnimalBioByName(name);
+            return response;
+        } else {
+            throw new IllegalArgumentException(name + " is not in this sanctuary");
+        }
+
     }
 
     @Override
@@ -199,13 +221,20 @@ public class Sanctuary implements Habitat {
 
     @Override
     public String toString() {
-        StringBuilder display = new StringBuilder("Welcome to " + name + "\nThis is the data information: \n");
+        StringBuilder display = new StringBuilder("Welcome to " + name + " \n");
 
         Housing[] houses = new Housing[]{this.isolation, this.enclosure};
+
+        if (houses.length == 0) {
+            display.append("There are not animals at the moment");
+        } else {
+            display.append("Total number of animals in this habitat: "+ this.getNumberOfAnimals('t') +" \n\n");
+        }
+
         for (Housing home: houses) {
             if(home.getNumberOfAnimalsInHabitat() > 0) {
                 display.append("\n").append(home.housingName).append("\n");
-                display.append("Animals in Habitat:").append(home.getNumberOfAnimalsInHabitat()).append("\n");
+                display.append("Animals in Habitat:").append(home.getNumberOfAnimalsInHabitat()).append("\n\n");
                 display.append(home.displayHabitatMembers());
             }
         }

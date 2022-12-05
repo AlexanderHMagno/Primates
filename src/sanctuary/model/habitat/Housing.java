@@ -74,4 +74,6 @@ public abstract class Housing {
     public String getHouseName() {
         return this.housingName;
     }
+
+    public abstract String getAnimalBioByName(String name);
 }

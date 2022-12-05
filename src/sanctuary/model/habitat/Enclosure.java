@@ -1,6 +1,7 @@
 package sanctuary.model.habitat;
 
 import sanctuary.model.habitat.animals.Animal;
+import sanctuary.model.habitat.animals.Monkey;
 import sanctuary.utils.Species;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class Enclosure extends Housing {
         StringBuilder info = new StringBuilder();
         for (Map.Entry<Species, TreeMap<String, Animal>> subgroup : this.rooms.entrySet()) {
             if (subgroup.getValue().size() > 0) {
-                info.append("Species:").append(subgroup.getKey()).append("\n");
+                info.append("Species:").append(subgroup.getKey()).append("\n\n");
                 for (Map.Entry<String, Animal> entry : subgroup.getValue().entrySet()) {
                     info.append("Name: ")
                             .append(entry.getKey())
@@ -81,6 +82,18 @@ public class Enclosure extends Housing {
             totalMonkeys += subgroup.getValue().size();
         }
         return totalMonkeys;
+    }
+
+    public String getAnimalBioByName(String name) throws IllegalArgumentException {
+
+        String nameF = Monkey.formatName(name);
+        Animal[] allAnimals = this.getAnimals();
+
+        for (Animal animal : allAnimals) {
+            if (nameF.equals(animal.getName()))return animal.toString();
+        }
+
+        return "Not Found";
     }
 
     @Override

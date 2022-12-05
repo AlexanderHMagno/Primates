@@ -88,4 +88,6 @@ public interface SanctuaryFeatures {
     String[] displayAnimalsInEnclosureGroup(Species species);
 
     String getFavoriteFood(Species valueOf, String selectedValue);
+
+    String[] searchAnimalByName(String searched);
 }

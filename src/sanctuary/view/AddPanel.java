@@ -7,11 +7,12 @@ import sanctuary.utils.Species;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class AddPanel extends JFrame {
 
     private JTextField name;
-    private JComboBox sexC, speciesC, foodC;
+    private JComboBox<String> sexC , speciesC , foodC;
     private JSpinner sizeC, weightC, ageC;
     private JTextArea areaResponse, area1;
     private final SanctuaryFeatures features;
@@ -99,12 +100,12 @@ public class AddPanel extends JFrame {
             String nameF = name.getText().trim().length() > 0 ? name.getText() : " ";
             features.addAnimal(
                     nameF,
-                    Species.valueOf(speciesC.getSelectedItem().toString()),
-                    Sex.valueOf(sexC.getSelectedItem().toString()),
+                    Species.valueOf(Objects.requireNonNull(speciesC.getSelectedItem()).toString()),
+                    Sex.valueOf(Objects.requireNonNull(sexC.getSelectedItem()).toString()),
                     (double) sizeC.getValue(),
                     (double) weightC.getValue(),
                     (int) ageC.getValue(),
-                    Food.valueOf(foodC.getSelectedItem().toString())
+                    Food.valueOf(Objects.requireNonNull(foodC.getSelectedItem()).toString())
             );
 
             area1.setText(features.getAnimalBio(Species.valueOf(speciesC.getSelectedItem().toString()),name.getText(),'i'));
@@ -121,9 +122,9 @@ public class AddPanel extends JFrame {
         name.setText("");
         speciesC.setSelectedIndex(0);
         sexC.setSelectedIndex(0);
-        sizeC.setValue(0.00);
-        weightC.setValue(0.00);
-        ageC.setValue(0);
+        sizeC.setValue(1.00);
+        weightC.setValue(1.00);
+        ageC.setValue(1);
         foodC.setSelectedIndex(0);
 
         areaResponse.setText("");
@@ -138,8 +139,8 @@ public class AddPanel extends JFrame {
         return label;
     }
 
-    private JComboBox createComboBox(String[] list, int y) {
-        JComboBox cb = new JComboBox(list);
+    private JComboBox<String> createComboBox(String[] list, int y) {
+        JComboBox<String> cb = new JComboBox<>(list);
         cb.setSize(100, 30);
         cb.setLocation(250, y);
         return cb;

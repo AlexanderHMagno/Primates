@@ -36,7 +36,7 @@ public class IsolationPanel extends JFrame {
         //Bio area
         isolationBio = Utilities.bioPanel();
         isolationBioTitle = new JLabel();
-        isolationBioTitle.setSize(100, 50);
+//        isolationBioTitle.setSize(100, 50);
         isolationBioTitle.setLocation(800, 250);
         panel.add(isolationBio);
         panel.add(isolationBioTitle);

@@ -1,11 +1,19 @@
 package sanctuary.view;
 
+import sanctuary.model.habitat.Habitat;
+import sanctuary.utils.Food;
+import sanctuary.utils.Sex;
+import sanctuary.utils.Species;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Utilities extends JFrame {
 
@@ -31,7 +39,7 @@ public class Utilities extends JFrame {
                 )
         ));
 
-        bioPanel.setOpaque(true);
+        bioPanel.setOpaque(false);
 
         return bioPanel;
     }
@@ -45,6 +53,38 @@ public class Utilities extends JFrame {
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
+
+
+    /**
+     * Create additional animals based on the provided file
+     * @param sanctuary The habitat that you want to add these animals
+     * @param group the name of the file in utils with the list of animals to add e.g. monkeys.txt
+     */
+    public static void addAdditionalAnimals(Habitat sanctuary, String group) throws IllegalStateException {
+
+        try {
+            File file = new File("src/sanctuary/utils/" +  group);
+            Scanner scan = new Scanner(file);
+
+            while (scan.hasNextLine())   {
+                String[] tokens = scan.nextLine().split(" ");
+                sanctuary.addNewAnimal(
+                        tokens[0],
+                        Species.valueOf(tokens[1]),
+                        Sex.valueOf(tokens[2]),
+                        Double.parseDouble(tokens[3]),
+                        Double.parseDouble(tokens[4]),
+                        Integer.parseInt(tokens[5]),
+                        Food.valueOf(tokens[6])
+                );
+            }
+            scan.close();
+        } catch (FileNotFoundException | RuntimeException e) {
+            throw new IllegalStateException("Sanctuary is full");
+        }
+
+    }
+
 
 
     public static Component createTitle(String text) {

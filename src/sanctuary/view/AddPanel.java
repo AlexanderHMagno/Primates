@@ -28,88 +28,45 @@ public class AddPanel extends JFrame {
         JPanel container = new JPanel();
         JTextArea panel = Utilities.createContainer();
 
-        JLabel nameL, sexL, speciesL, sizeL, weightL, ageL, foodL, title;
-
-
         //Title
         panel.add(panel.add(Utilities.createTitle("Add new Monkey")));
 
         //name
         name = new JTextField("",15);
-        nameL = new JLabel("Name:");
-        nameL.setSize(300, 30);
         name.setSize(300, 30);
         name.setLocation(250, 200);
-        nameL.setLocation(200, 200);
-        panel.add(nameL);
         panel.add(name);
+        panel.add(createLabel("Name", 200));
 
         //Species
-
-        String[] speciesList = Utilities.getNames(Species.class);
-        speciesC= new JComboBox(speciesList);
-        speciesL = new JLabel("Species:");
-        speciesL.setSize(300, 30);
-        speciesC.setSize(100, 30);
-        speciesC.setLocation(250, 250);
-        speciesL.setLocation(200, 250);
-        panel.add(speciesL);
+        speciesC = createComboBox(Utilities.getNames(Species.class), 250);
         panel.add(speciesC);
+        panel.add(createLabel("Species", 250));
 
         //sex
-        String[] sexList = Utilities.getNames(Sex.class);
-        sexC= new JComboBox(sexList);
-        sexL = new JLabel("Sex:");
-        sexL.setSize(300, 30);
-        sexC.setSize(100, 30);
-        sexC.setLocation(250, 300);
-        sexL.setLocation(200, 300);
-        panel.add(sexL);
+        sexC= createComboBox(Utilities.getNames(Sex.class), 300);
         panel.add(sexC);
+        panel.add(createLabel("Sex", 300));
 
         //Food
-        String foodList[] = Utilities.getNames(Food.class);
-        foodC= new JComboBox(foodList);
-        foodL = new JLabel("Favorite Food:");
-        foodL.setSize(300, 30);
-        foodC.setSize(100, 30);
-        foodC.setLocation(300, 350);
-        foodL.setLocation(200, 350);
-        panel.add(foodL);
+        foodC= createComboBox(Utilities.getNames(Food.class), 350);
         panel.add(foodC);
+        panel.add(createLabel("Food", 350));
 
         //size
-        SpinnerModel sizeFormat = new SpinnerNumberModel(0, 0, 200, 0.1);
-        sizeC = new JSpinner(sizeFormat);
-        sizeL = new JLabel("Size: ");
-        sizeL.setSize(300, 30);
-        sizeC.setSize(100, 30);
-        sizeC.setLocation(250, 400);
-        sizeL.setLocation(200, 400);
-        panel.add(sizeL);
+        sizeC = createJSpinner(new SpinnerNumberModel(1,1,1000, 0.1),400);
         panel.add(sizeC);
+        panel.add(createLabel("Size", 400));
 
         //Weight
-        SpinnerModel weightFormat = new SpinnerNumberModel(0, 0, 200, 0.1);
-        weightC = new JSpinner(weightFormat);
-        weightL = new JLabel("Weight: ");
-        weightL.setSize(300, 30);
-        weightC.setSize(100, 30);
-        weightC.setLocation(250, 450);
-        weightL.setLocation(200, 450);
-        panel.add(weightL);
+        weightC = createJSpinner(new SpinnerNumberModel(1,1,1000, 0.1),450);
         panel.add(weightC);
+        panel.add(createLabel("Weight", 450));
 
         //Age
-        SpinnerModel ageFormat = new SpinnerNumberModel(0, 0, 100, 1);
-        ageC = new JSpinner(ageFormat);
-        ageL = new JLabel("Age: ");
-        ageL.setSize(300, 30);
-        ageC.setSize(100, 30);
-        ageC.setLocation(250, 500);
-        ageL.setLocation(200, 500);
-        panel.add(ageL);
+        ageC = createJSpinner(new SpinnerNumberModel(1,1,100, 1),500);
         panel.add(ageC);
+        panel.add(createLabel("Age", 500));
 
         area1 = Utilities.bioPanel();
         panel.add(area1);
@@ -172,6 +129,27 @@ public class AddPanel extends JFrame {
         areaResponse.setText("");
         area1.setText("");
 
+    }
+
+    private JLabel createLabel(String text, int y) {
+        JLabel label = new JLabel(text + ": ");
+        label.setSize(300, 30);
+        label.setLocation(200, y);
+        return label;
+    }
+
+    private JComboBox createComboBox(String[] list, int y) {
+        JComboBox cb = new JComboBox(list);
+        cb.setSize(100, 30);
+        cb.setLocation(250, y);
+        return cb;
+    }
+
+    private JSpinner createJSpinner(SpinnerNumberModel SNM, int y) {
+        JSpinner spin = new JSpinner(SNM);
+        spin.setSize(100, 30);
+        spin.setLocation(250, y);
+        return spin;
     }
 
 }

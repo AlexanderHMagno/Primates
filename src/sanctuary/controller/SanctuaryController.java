@@ -6,6 +6,7 @@ import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
 import sanctuary.view.SanctuaryView;
+import sanctuary.view.Utilities;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,17 @@ public class SanctuaryController implements SanctuaryFeatures{
     @Override
     public int animalInEnclosure(Species valueOf) {
         return this.model.getNumberOfAnimalsEnclosure(valueOf);
+    }
+
+    @Override
+    public void massiveLoader() throws IllegalStateException {
+        Utilities.addAdditionalAnimals(this.model, "monkeys.txt");
+    }
+
+    @Override
+    public void massiveHealer() {
+        this.model.moveForceToEnclosure();
+        this.view.updateIsolationArea();
     }
 
     @Override

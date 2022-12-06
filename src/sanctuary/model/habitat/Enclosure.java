@@ -69,6 +69,7 @@ public class Enclosure extends Housing {
                             .append(entry.getValue().getSpecies())
                             .append("\n");
                 }
+                info.append("\n");
             }
         }
         return info.toString();

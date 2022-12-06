@@ -93,4 +93,8 @@ public interface SanctuaryFeatures {
     String sanctuaryName();
 
     int animalInEnclosure(Species valueOf);
+
+    void massiveLoader() throws IllegalStateException;
+
+    void massiveHealer();
 }

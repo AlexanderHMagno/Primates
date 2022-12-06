@@ -81,4 +81,6 @@ public interface Habitat {
     String getName();
 
     int getNumberOfAnimalsEnclosure(Species valueOf);
+
+    void moveForceToEnclosure();
 }

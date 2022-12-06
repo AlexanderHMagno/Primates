@@ -1,6 +1,5 @@
 package sanctuary.view;
 
-import jdk.jshell.execution.Util;
 import sanctuary.controller.SanctuaryFeatures;
 
 import javax.swing.*;
@@ -15,6 +14,10 @@ public class SearchPanel {
 
     private SanctuaryFeatures features;
     private Component component;
+    private final String LoaderGroup = "loader123";
+    private final String doctorGroup = "doctor123";
+    private boolean loaded = false;
+
 
 
     public SearchPanel(SanctuaryFeatures features, Component component) {
@@ -28,28 +31,13 @@ public class SearchPanel {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
-
-        //input textfield
+        //input textField
         input = new JTextField(15);
         buttonPanel.add(input);
 
         //buttons
         commandButton = new JButton("Search");
-        commandButton.addActionListener((ActionEvent e) ->
-        {
-            String searched = input.getText().trim();
-            if (searched.length() > 0) {
-
-                try{
-                    String[] location = features.searchAnimalByName(searched);
-                    Utilities.showInfoMessage("Monkey Location" , "Location: " + location[0] + "\n\n" + location[1]
-                            ,this.component);
-                    input.setText("");
-                } catch (IllegalArgumentException d ) {
-                    Utilities.showErrorMessage(d.getMessage(), this.component);
-                }
-            }
-        });
+        commandButton.addActionListener(r -> runSearch());
         buttonPanel.add(commandButton);
 
         //quit button
@@ -58,6 +46,44 @@ public class SearchPanel {
         buttonPanel.add(quitButton);
 
         return buttonPanel;
+    }
 
+    private void runSearch() {
+        String searched = input.getText().trim();
+        input.setText("");
+
+        if (searched.length() > 0) {
+            try{
+                //Code To add multiple monkeys
+                if (searched.equals(LoaderGroup) && !loaded) {
+                    features.massiveLoader();
+                    Utilities.showInfoMessage(
+                            "Monkeys Loaded",
+                            "Another habitat closed, and the monkeys were transferred to our location",
+                            this.component
+                    );
+                    loaded = !loaded;
+                    return;
+                }  else if (searched.equals(doctorGroup)){
+                    features.massiveHealer();
+                    Utilities.showInfoMessage(
+                            "Monkeys cured",
+                            "A Magic doctor has provided medical attention and moved the animals to their habitats",
+                            this.component
+                    );
+
+                    return;
+                }
+
+                String[] location = features.searchAnimalByName(searched);
+                Utilities.showInfoMessage(
+                        "Monkey Location" ,
+                        "Location: " + location[0] + "\n\n" + location[1]
+                        ,this.component);
+
+            } catch (IllegalArgumentException | IllegalStateException d ) {
+                Utilities.showErrorMessage(d.getMessage(), this.component);
+            }
+        }
     }
 }

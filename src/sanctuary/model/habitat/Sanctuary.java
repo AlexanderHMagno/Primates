@@ -150,11 +150,11 @@ public class Sanctuary implements Habitat {
         ArrayList<String> enclosure = this.getAnimalsNamesInHabitat('e');
         String[] response = new String[2];
 
-        if(isolation.indexOf(name) != -1) {
+        if(isolation.contains(name)) {
             response[0] = this.isolation.housingName;
             response[1] = this.getAnimalBio(Species.Quereza, name, 'i');
             return response;
-        } else if(enclosure.indexOf(name) != -1) {
+        } else if(enclosure.contains(name)) {
             response[0] = this.enclosure.housingName;
             response[1] =  this.enclosure.getAnimalBioByName(name);
             return response;
@@ -233,11 +233,8 @@ public class Sanctuary implements Habitat {
 
         Housing[] houses = new Housing[]{this.isolation, this.enclosure};
 
-        if (houses.length == 0) {
-            display.append("There are not animals at the moment");
-        } else {
-            display.append("Total number of animals in this habitat: "+ this.getNumberOfAnimals('t') +" \n\n");
-        }
+        display.append("Total number of animals in this habitat: ")
+                .append(this.getNumberOfAnimals('t')).append(" \n\n");
 
         for (Housing home: houses) {
             if(home.getNumberOfAnimalsInHabitat() > 0) {

@@ -6,17 +6,21 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 
+/**
+ * this class represents the view in the general MVC architect design. It extends JFrame and implements the
+ * SanctuaryView
+ */
 public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
-
 
     private SanctuaryFeatures features;
     private IsolationPanel isolationPanel;
     private EnclosurePanel enclosurePanel;
     private AddPanel addPanel;
     private DashboardPanel dashboardPanel;
-    private SearchPanel searchPanel;
 
-
+    /**
+     * Constructor of the view.
+     */
     public SanctuaryAnimalView() {
         super();
         this.setSize(500, 500);
@@ -43,12 +47,24 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
         this.pack();
     }
 
+    public void setDashboardInfo(String text){this.dashboardPanel.setDashboardInfo(text);}
+
+    public void updateEnclosureArea() {this.enclosurePanel.updateEnclosureArea();}
+
+    public void updateIsolationArea() {this.isolationPanel.updateIsolationArea();}
+
+    /**
+     * Include the searched area
+     */
     private void addSearchArea() {
 
         SearchPanel searchPanel = new SearchPanel(features,this);
         this.add(searchPanel.addSearchArea(), BorderLayout.SOUTH);
     }
 
+    /**
+     * Include the menu tab
+     */
     private void addMenu() {
         JTabbedPane tabs = new JTabbedPane();
 
@@ -75,23 +91,5 @@ public class SanctuaryAnimalView extends JFrame implements SanctuaryView {
 
         this.add(tabs);
     }
-
-
-    @Override
-    public void refresh() {this.repaint();}
-
-
-    public void setDashboardInfo(String text){this.dashboardPanel.setDashboardInfo(text);}
-
-    public void updateEnclosureArea() {this.enclosurePanel.updateEnclosureArea();}
-
-    public void updateIsolationArea() {this.isolationPanel.updateIsolationArea();}
-
-
-
-
-
-
-
 
 }

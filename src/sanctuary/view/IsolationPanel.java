@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * This class represents an Isolation Panel. It is used to create a Panel in the habitat
+ */
 public class IsolationPanel extends JFrame {
 
     private JPanel isolationArea;
@@ -15,12 +18,20 @@ public class IsolationPanel extends JFrame {
     private final SanctuaryFeatures features;
     private final Component component;
 
-
+    /**
+     * Constructor that accepts a features class (actions) and a global component to append child components
+     * @param features Controller the brain of this application
+     * @param component Global component to append the Isolation panel
+     */
     public IsolationPanel(SanctuaryFeatures features, Component component) {
         this.features = features;
         this.component = component;
     }
 
+    /**
+     * Method that will create and rendering the Isolation Panel folder
+     * @return The components of the Isolation Folder glue to a unique JPanel
+     */
     public JPanel createIsolationFolder() {
 
         JPanel container = new JPanel();
@@ -36,7 +47,6 @@ public class IsolationPanel extends JFrame {
         //Bio area
         isolationBio = Utilities.bioPanel();
         isolationBioTitle = new JLabel();
-//        isolationBioTitle.setSize(100, 50);
         isolationBioTitle.setLocation(800, 250);
         panel.add(isolationBio);
         panel.add(isolationBioTitle);
@@ -55,6 +65,9 @@ public class IsolationPanel extends JFrame {
         return container;
     }
 
+    /**
+     * Rerender the isolation area when there is a change in it.
+     */
     public void updateIsolationArea() {
 
         ArrayList<String> animalsIsolation = features.displayAllAnimalsNames('i');
@@ -89,6 +102,9 @@ public class IsolationPanel extends JFrame {
         }
     }
 
+    /**
+     * Move an animal to the enclosure
+     */
     private void moveAction() {
 
         String name = isolationBioTitle.getText();
@@ -100,6 +116,9 @@ public class IsolationPanel extends JFrame {
         }
     }
 
+    /**
+     * Provide medical attention to an animal
+     */
     private void healthAction() {
         String name = isolationBioTitle.getText();
         try{

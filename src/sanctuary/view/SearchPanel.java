@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * This class represents a Search Panel. It is used to create a Panel in the habitat
+ */
 public class SearchPanel {
 
     private JPanel buttonPanel;
@@ -19,13 +22,20 @@ public class SearchPanel {
     private boolean loaded = false;
 
 
-
+    /**
+     * Constructor that accepts a features class (actions) and a global component to append child components
+     * @param features Controller the brain of this application
+     * @param component Global component to append the Search panel
+     */
     public SearchPanel(SanctuaryFeatures features, Component component) {
         this.features = features;
         this.component = component;
     }
 
-
+    /**
+     * Method that will create and render the search Panel folder
+     * @return The components of the Search Area glue to a unique JPanel
+     */
     public JPanel addSearchArea() {
         //button panel
         buttonPanel = new JPanel();
@@ -48,6 +58,9 @@ public class SearchPanel {
         return buttonPanel;
     }
 
+    /**
+     * Action when the user click on search
+     */
     private void runSearch() {
         String searched = input.getText().trim();
         input.setText("");
@@ -71,7 +84,6 @@ public class SearchPanel {
                             "A Magic doctor has provided medical attention and moved the animals to their habitats",
                             this.component
                     );
-
                     return;
                 }
 

@@ -72,15 +72,46 @@ public interface Habitat {
      */
     void moveAnimalToIsolation(Species species, String name) throws IllegalStateException, IllegalArgumentException;
 
-    String getAnimalBio(Species species, String text, char location);
+    /**
+     * Get an animal information
+     * @param species Type of animal
+     * @param name name of the animal
+     * @param location location 'i' isolation | 'e' enclosure
+     * @return animal's bio
+     */
+    String getAnimalBio(Species species, String name, char location);
 
-    String getFavoriteFood(Species valueOf, String selectedValue);
+    /**
+     * Get animals favorite food
+     * @param species Type of animal
+     * @param name name of the animal
+     * @return The animal's favorite food
+     */
+    String getFavoriteFood(Species species, String name);
 
+    /**
+     * Gets animals bio by name
+     * @param searched name of the animal
+     * @return An array with location, and animals bio
+     * @throws IllegalArgumentException If the animal is not in the habitat
+     */
     String[] getAnimalBioByName(String searched) throws IllegalArgumentException;
 
+    /**
+     * Obtain the name of this habitat
+     * @return The habitat's name
+     */
     String getName();
 
-    int getNumberOfAnimalsEnclosure(Species valueOf);
+    /**
+     * Get number of animals per enclosure
+     * @param species Type of animal
+     * @return number of animals in a particular enclosure
+     */
+    int getNumberOfAnimalsEnclosure(Species species);
 
+    /**
+     * Helper method to force animals to be healed and moved to the enclosure
+     */
     void moveForceToEnclosure();
 }

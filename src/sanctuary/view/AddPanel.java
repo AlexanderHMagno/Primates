@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * This class represents an Add Pane. It is used to create a Panel in the habitat
+ */
 public class AddPanel extends JFrame {
 
     private JTextField name;
@@ -19,11 +22,20 @@ public class AddPanel extends JFrame {
     private final Component component;
 
 
+    /**
+     * Constructor that accepts a features class (actions) and a global component to append child components
+     * @param features Controller the brain of this application
+     * @param component Global component to append the add panel
+     */
     public AddPanel(SanctuaryFeatures features, Component component) {
         this.features = features;
         this.component = component;
     }
 
+    /**
+     * Method that will create and rendering the add Panel folder
+     * @return The components of the add Folder glue to a unique JPanel
+     */
     public JPanel createAddFolder(){
 
         JPanel container = new JPanel();
@@ -40,17 +52,17 @@ public class AddPanel extends JFrame {
         panel.add(createLabel("Name", 200));
 
         //Species
-        speciesC = createComboBox(Utilities.getNames(Species.class), 250);
+        speciesC = createComboBox(Utilities.getEnumNames(Species.class), 250);
         panel.add(speciesC);
         panel.add(createLabel("Species", 250));
 
         //sex
-        sexC= createComboBox(Utilities.getNames(Sex.class), 300);
+        sexC= createComboBox(Utilities.getEnumNames(Sex.class), 300);
         panel.add(sexC);
         panel.add(createLabel("Sex", 300));
 
         //Food
-        foodC= createComboBox(Utilities.getNames(Food.class), 350);
+        foodC= createComboBox(Utilities.getEnumNames(Food.class), 350);
         panel.add(foodC);
         panel.add(createLabel("Food", 350));
 
@@ -94,7 +106,9 @@ public class AddPanel extends JFrame {
 
     }
 
-
+    /**
+     * Create action, that will take inputs and send a request to create a new animal
+     */
     private void createAction() {
         try{
             String nameF = name.getText().trim().length() > 0 ? name.getText() : " ";
@@ -117,6 +131,9 @@ public class AddPanel extends JFrame {
 
     }
 
+    /**
+     * If the user wants to remove the form and start from scratch
+     */
     private void resetAction() {
 
         name.setText("");
@@ -132,6 +149,12 @@ public class AddPanel extends JFrame {
 
     }
 
+    /**
+     * Create a JLabel of the same size and on the same horizontal position.
+     * @param text to display
+     * @param y vertical position in the container
+     * @return an instance of a JLabel
+     */
     private JLabel createLabel(String text, int y) {
         JLabel label = new JLabel(text + ": ");
         label.setSize(300, 30);
@@ -139,6 +162,12 @@ public class AddPanel extends JFrame {
         return label;
     }
 
+    /**
+     * Create a Combobox of the same size and at the same horizontal position
+     * @param list Options to display
+     * @param y Vertical position in the container
+     * @return An instance of a comboBox
+     */
     private JComboBox<String> createComboBox(String[] list, int y) {
         JComboBox<String> cb = new JComboBox<>(list);
         cb.setSize(100, 30);
@@ -146,11 +175,16 @@ public class AddPanel extends JFrame {
         return cb;
     }
 
+    /**
+     * create JSpinner of the same size and at the same horizontal position
+     * @param SNM Filter with the minimum, max, initial value and steps.
+     * @param y Vertical position on this container
+     * @return formatted JSpinner
+     */
     private JSpinner createJSpinner(SpinnerNumberModel SNM, int y) {
         JSpinner spin = new JSpinner(SNM);
         spin.setSize(100, 30);
         spin.setLocation(250, y);
         return spin;
     }
-
 }

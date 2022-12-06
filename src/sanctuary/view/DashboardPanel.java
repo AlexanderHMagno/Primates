@@ -7,17 +7,29 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * This class represents a Dashboard Panel. It is used to create a Panel in the habitat
+ */
 public class DashboardPanel {
 
     private JTextArea dashboardInfo;
-    private SanctuaryFeatures features;
-    private Component component;
+    private final SanctuaryFeatures features;
+    private final Component component;
 
+    /**
+     * Constructor that accepts a features class (actions) and a global component to append child components
+     * @param features Controller the brain of this application
+     * @param component Global component to append the dashboard panel
+     */
     public DashboardPanel(SanctuaryFeatures features, Component component) {
         this.features = features;
         this.component = component;
     }
 
+    /**
+     * Method that will create and rendering the Dashboard Panel folder
+     * @return The components of the dashboard Folder glue to a unique JPanel
+     */
     public JPanel createDashboardFolder() {
 
         JPanel panel = new JPanel();
@@ -72,6 +84,10 @@ public class DashboardPanel {
 
     }
 
+    /**
+     * Update the information of the habitat
+     * @param text Information with habitat's Bio
+     */
     public void setDashboardInfo(String text){
         this.dashboardInfo.setText(text);
     }

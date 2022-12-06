@@ -75,5 +75,10 @@ public abstract class Housing {
         return this.housingName;
     }
 
+    /**
+     * Display animal's bio using their name
+     * @param name animals identification
+     * @return an animal's bio
+     */
     public abstract String getAnimalBioByName(String name);
 }

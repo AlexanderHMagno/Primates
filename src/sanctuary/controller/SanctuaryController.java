@@ -1,7 +1,6 @@
 package sanctuary.controller;
 
 import sanctuary.model.habitat.Habitat;
-import sanctuary.model.habitat.animals.Animal;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
@@ -10,10 +9,19 @@ import sanctuary.view.Utilities;
 
 import java.util.ArrayList;
 
+/**
+ * this class represents the controller on the MVC architect design. It implements a SanctuaryFeatures
+ */
 public class SanctuaryController implements SanctuaryFeatures{
 
     private final Habitat model;
     private final SanctuaryView view;
+
+    /**
+     * Constructor of the controller
+     * @param model the back end of application
+     * @param view the front end
+     */
     public SanctuaryController(Habitat model, SanctuaryView view) {
         this.model = model;
         this.view = view;
@@ -74,25 +82,10 @@ public class SanctuaryController implements SanctuaryFeatures{
     }
 
     @Override
-    public ArrayList<Animal> displayAnimalsInEnclosure() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Animal> displayAnimalsInIsolation() {
-        return null;
-    }
-
-    @Override
     public ArrayList<String> displayAllAnimalsNames(char location) {
         return this.model.getAnimalsNamesInHabitat(location);
     }
 
-
-    @Override
-    public void closeProgram() {
-
-    }
 
     @Override
     public void go() {

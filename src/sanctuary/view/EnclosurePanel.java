@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * This class represents an Enclosure Panel. It is used to create a Panel in the habitat
+ */
 public class EnclosurePanel extends JFrame {
 
     private  JTextArea enclosureBio;
@@ -18,11 +21,20 @@ public class EnclosurePanel extends JFrame {
     private final Component component;
 
 
+    /**
+     * Constructor that accepts a features class (actions) and a global component to append child components
+     * @param features Controller the brain of this application
+     * @param component Global component to append the enclosure panel
+     */
     public EnclosurePanel(SanctuaryFeatures features, Component component) {
         this.features = features;
         this.component = component;
     }
 
+    /**
+     * Method that will create and rendering the Enclosure Panel folder
+     * @return The components of the Enclosure Folder glue to a unique JPanel
+     */
     public JPanel createEnclosureFolder() {
 
         JPanel container = new JPanel();
@@ -45,7 +57,7 @@ public class EnclosurePanel extends JFrame {
         panel.add(enclosureBioTitle);
 
         //Add Groups of species
-        for (String group: Utilities.getNames(Species.class)) {
+        for (String group: Utilities.getEnumNames(Species.class)) {
             this.createEnvironments(group);
         }
 
@@ -76,12 +88,14 @@ public class EnclosurePanel extends JFrame {
         return container;
     }
 
+    /**
+     * Create the habitat of each specie
+     * @param group The name of the Species to create the room
+     */
     private void createEnvironments(String group) {
         JButton subGroup = new JButton();
         subGroup.setName(group);
-        subGroup.setSize(400,500);
         subGroup.setSize(new Dimension(400,400));
-        subGroup.setMaximumSize(new Dimension(400, 400));
         subGroup.setText(group);
 
         subGroup.addActionListener(x -> {
@@ -92,6 +106,9 @@ public class EnclosurePanel extends JFrame {
         enclosureArea.add(subGroup);
     }
 
+    /**
+     * Every time there is a change in the enclosure, the habitat gets updated repainting the information
+     */
     public void updateEnclosureArea() {
 
         paintEnclosures();
@@ -100,6 +117,10 @@ public class EnclosurePanel extends JFrame {
         membersList.removeAllElements();
     }
 
+    /**
+     * Display the animals in the selected species group,
+     * @param group The species group to display the animals in it.
+     */
     private void updateAnimalsInGroup(String group) {
         membersList.removeAllElements();
         for (String en :features.displayAnimalsInEnclosureGroup(Species.valueOf(group)) ) {
@@ -107,6 +128,11 @@ public class EnclosurePanel extends JFrame {
         }
     }
 
+    /**
+     * The enclosure will be updated everytime there is a change, color red
+     * represents animals living in the habitat. gray there is not animal
+     * This will also display the number of animals per habitat
+     */
     private void paintEnclosures() {
 
         for (Component c : enclosureArea.getComponents()) {
@@ -121,6 +147,9 @@ public class EnclosurePanel extends JFrame {
         }
     }
 
+    /**
+     * Action to feed an animal.
+     */
     private void feedAction() {
         try {
             Utilities.showInfoMessage("Food Food", "Ook-ook! \n" +
@@ -132,6 +161,9 @@ public class EnclosurePanel extends JFrame {
         }
     }
 
+    /**
+     * Action to move an animal to the Isolation
+     */
     private void moveAction() {
 
         try {
@@ -146,6 +178,9 @@ public class EnclosurePanel extends JFrame {
         }
     }
 
+    /**
+     * action triggered when the user selects an animal from the list
+     */
     private void changeList() {
         String data = list.getSelectedValue();
         if (data != null) {

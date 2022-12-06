@@ -11,14 +11,10 @@ import java.awt.event.ActionEvent;
  */
 public class SearchPanel {
 
-    private JPanel buttonPanel;
     private JTextField input;
-    private JButton commandButton, quitButton;
 
-    private SanctuaryFeatures features;
-    private Component component;
-    private final String LoaderGroup = "loader123";
-    private final String doctorGroup = "doctor123";
+    private final SanctuaryFeatures features;
+    private final Component component;
     private boolean loaded = false;
 
 
@@ -38,7 +34,7 @@ public class SearchPanel {
      */
     public JPanel addSearchArea() {
         //button panel
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
         //input textField
@@ -46,13 +42,13 @@ public class SearchPanel {
         buttonPanel.add(input);
 
         //buttons
-        commandButton = new JButton("Search");
+        JButton commandButton = new JButton("Search");
         commandButton.addActionListener(r -> runSearch());
         buttonPanel.add(commandButton);
 
         //quit button
-        quitButton = new JButton("Quit");
-        quitButton.addActionListener((ActionEvent e) -> {System.exit(0);});
+        JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener((ActionEvent e) -> System.exit(0));
         buttonPanel.add(quitButton);
 
         return buttonPanel;
@@ -68,7 +64,9 @@ public class SearchPanel {
         if (searched.length() > 0) {
             try{
                 //Code To add multiple monkeys
-                if (searched.equals(LoaderGroup) && !loaded) {
+                String loaderGroup = "loader123";
+                String doctorGroup = "doctor123";
+                if (searched.equals(loaderGroup) && !loaded) {
                     features.massiveLoader();
                     Utilities.showInfoMessage(
                             "Monkeys Loaded",

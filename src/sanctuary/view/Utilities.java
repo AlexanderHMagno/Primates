@@ -10,6 +10,9 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -59,7 +62,8 @@ public class Utilities extends JFrame {
     public static void addAdditionalAnimals(Habitat sanctuary, String group) throws IllegalStateException {
 
         try {
-            File file = new File("src/sanctuary/utils/" +  group);
+
+            InputStream file = Utilities.class.getClassLoader().getResourceAsStream(group);
             Scanner scan = new Scanner(file);
 
             while (scan.hasNextLine())   {
@@ -75,8 +79,8 @@ public class Utilities extends JFrame {
                 );
             }
             scan.close();
-        } catch (FileNotFoundException | RuntimeException e) {
-            throw new IllegalStateException("Sanctuary is full");
+        } catch (RuntimeException e) {
+            throw new IllegalStateException(e.getMessage());
         }
 
     }

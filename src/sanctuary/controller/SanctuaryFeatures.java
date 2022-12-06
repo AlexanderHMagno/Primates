@@ -18,11 +18,10 @@ public interface SanctuaryFeatures {
      * @param weight - weight in kilos
      * @param age - provide the age of the monkey
      * @param food - provide the favorite food of this monkey
-     * @return true if the animal was added to the system
      * @throws IllegalStateException If the Shelter is already full
      * @throws IllegalArgumentException If the information of the animal is not complete and valid
      */
-    boolean addAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food)
+    void addAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food)
             throws IllegalStateException, IllegalArgumentException;
 
     /**
@@ -92,4 +91,6 @@ public interface SanctuaryFeatures {
     String[] searchAnimalByName(String searched);
 
     String sanctuaryName();
+
+    int animalInEnclosure(Species valueOf);
 }

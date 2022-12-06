@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class SanctuaryController implements SanctuaryFeatures{
 
-    private Habitat model;
-    private SanctuaryView view;
+    private final Habitat model;
+    private final SanctuaryView view;
     public SanctuaryController(Habitat model, SanctuaryView view) {
         this.model = model;
         this.view = view;
@@ -21,13 +21,8 @@ public class SanctuaryController implements SanctuaryFeatures{
 
 
     @Override
-    public boolean addAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food) throws IllegalStateException, IllegalArgumentException {
-
-        boolean created = false;
-
+    public void addAnimal(String name, Species species, Sex sex, double size, double weight, int age, Food food) throws IllegalStateException, IllegalArgumentException {
         this.model.addNewAnimal(name,species,sex,size,weight,age,food);
-
-        return created;
     }
 
     @Override
@@ -54,6 +49,11 @@ public class SanctuaryController implements SanctuaryFeatures{
     @Override
     public String sanctuaryName() {
         return this.model.getName();
+    }
+
+    @Override
+    public int animalInEnclosure(Species valueOf) {
+        return this.model.getNumberOfAnimalsEnclosure(valueOf);
     }
 
     @Override

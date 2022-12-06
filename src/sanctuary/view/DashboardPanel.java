@@ -63,11 +63,8 @@ public class DashboardPanel {
 
         bk.add(dashboardInfo);
 
-        JLabel title = new JLabel("Jungle Friends");
-        title.setFont(new Font("Arial", Font.BOLD, 30));
-        title.setSize(400, 100);
-        title.setLocation(500, 50);
-        bk.add(title);
+        //Title
+        bk.add(panel.add(Utilities.createTitle("Jungle Friends")));
 
         panel.add(bk);
 

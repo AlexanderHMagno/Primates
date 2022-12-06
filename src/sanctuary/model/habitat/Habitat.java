@@ -79,4 +79,6 @@ public interface Habitat {
     String[] getAnimalBioByName(String searched) throws IllegalArgumentException;
 
     String getName();
+
+    int getNumberOfAnimalsEnclosure(Species valueOf);
 }

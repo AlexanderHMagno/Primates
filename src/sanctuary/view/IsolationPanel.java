@@ -4,7 +4,6 @@ import sanctuary.controller.SanctuaryFeatures;
 import sanctuary.utils.Species;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,8 +12,8 @@ public class IsolationPanel extends JFrame {
     private JPanel isolationArea;
     private JTextArea isolationBio;
     private JLabel isolationBioTitle;
-    private SanctuaryFeatures features;
-    private Component component;
+    private final SanctuaryFeatures features;
+    private final Component component;
 
 
     public IsolationPanel(SanctuaryFeatures features, Component component) {
@@ -23,68 +22,37 @@ public class IsolationPanel extends JFrame {
     }
 
     public JPanel createIsolationFolder() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
 
-        JLabel title = new JLabel("Isolation area");
-        title.setFont(new Font("Arial", Font.BOLD, 30));
-        title.setSize(400, 100);
-        title.setLocation(500, 50);
-        panel.add(title);
+        JPanel container = new JPanel();
+        JTextArea panel = Utilities.createContainer();
+
+        //title
+        panel.add(Utilities.createTitle("Isolation area"));
 
         //Display Monkeys Isolation
-
-        isolationArea = new JPanel(new GridLayout(4,4,4,4));
-        isolationArea.setSize(400, 300);
-        isolationArea.setLocation(200, 200);
-
+        isolationArea = Utilities.createGridRooms();
         panel.add(isolationArea);
 
-        isolationBio = new JTextArea();
-        isolationBio.setSize(300, 200);
-        isolationBio.setLocation(800, 200);
-        isolationBio.setBorder(new EmptyBorder(10, 10, 10, 10));
-
+        //Bio area
+        isolationBio = Utilities.bioPanel();
         isolationBioTitle = new JLabel();
         isolationBioTitle.setSize(100, 50);
         isolationBioTitle.setLocation(800, 250);
-
         panel.add(isolationBio);
         panel.add(isolationBioTitle);
 
-        JButton moveButton = new JButton("Move to Enclosure");
-        moveButton.setSize(200, 30);
-        moveButton.setLocation(200, 550);
-        moveButton.addActionListener(e-> {
-            String name = isolationBioTitle.getText();
+        //Add Buttons
+        JButton healthButton = Utilities.addButton("Medical Attention (PMA)", 200, 550);
+        healthButton.addActionListener(e -> this.healthAction());
+        panel.add(healthButton);
 
-            try {
-
-                features.transferAnimalToEnclosure(name);
-                features.updateIsolation();
-            } catch (IllegalStateException | IllegalArgumentException f) {
-                Utilities.showErrorMessage(f.getMessage(), this.component);
-            }
-        });
+        JButton moveButton = Utilities.addButton("Move to Enclosure", 400,550);
+        moveButton.addActionListener(e -> this.moveAction());
         panel.add(moveButton);
 
-        JButton actionButton = new JButton("Provide Medical Attention (PMA)");
-        actionButton.addActionListener(e -> {
-            String name = isolationBioTitle.getText();
+        container.add(panel);
 
-            try{
-                features.provideMedicalAttention(name);
-                isolationBio.setText(features.getAnimalBio(Species.Howler,name,'i'));
-            } catch (IllegalStateException | IllegalArgumentException f){
-                Utilities.showErrorMessage(f.getMessage(),this.component);
-            }
-
-        });
-        actionButton.setSize(200, 30);
-        actionButton.setLocation(400, 550);
-        panel.add(actionButton);
-
-        return panel;
+        return container;
     }
 
     public void updateIsolationArea() {
@@ -96,7 +64,6 @@ public class IsolationPanel extends JFrame {
         for (String monkey : animalsIsolation) {
             JButton jail = new JButton();
             jail.setText(monkey);
-            jail.setSize(500,500);
             jail.setSize(new Dimension(400,400));
             jail.setForeground(new Color(32, 137, 203));
             jail.addActionListener(e-> {
@@ -122,4 +89,24 @@ public class IsolationPanel extends JFrame {
         }
     }
 
+    private void moveAction() {
+
+        String name = isolationBioTitle.getText();
+        try {
+            features.transferAnimalToEnclosure(name);
+            features.updateIsolation();
+        } catch (IllegalStateException | IllegalArgumentException f) {
+            Utilities.showErrorMessage(f.getMessage(), this.component);
+        }
+    }
+
+    private void healthAction() {
+        String name = isolationBioTitle.getText();
+        try{
+            features.provideMedicalAttention(name);
+            isolationBio.setText(features.getAnimalBio(Species.Howler,name,'i'));
+        } catch (IllegalStateException | IllegalArgumentException f){
+            Utilities.showErrorMessage(f.getMessage(),this.component);
+        }
+    }
 }

@@ -170,6 +170,11 @@ public class Sanctuary implements Habitat {
     }
 
     @Override
+    public int getNumberOfAnimalsEnclosure(Species valueOf) {
+        return this.enclosure.getEnclosure(valueOf).size();
+    }
+
+    @Override
     public void provideMedicalAttention (String name) throws IllegalArgumentException {
         Animal animal = this.isolation.getAnimal(name);
         animal.setHealth(100);

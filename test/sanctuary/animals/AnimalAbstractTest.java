@@ -138,17 +138,16 @@ public class AnimalAbstractTest {
     @Test
     public void testToString() {
 
-        String bongString = "Animal{\n" +
-                "name=Bong,\n" +
-                "species=Howler,\n" +
-                "sex=Male,\n" +
-                "size=180.0,\n" +
-                "weight=130.33,\n" +
-                "age=14,\n" +
-                "food=Nuts,\n" +
-                "health=50,\n" +
-                "home=Wild animal\n" +
-                "}";
+        String bongString = "\n" +
+                "Name: Bong,\n" +
+                "Species: Howler,\n" +
+                "Sex: Male,\n" +
+                "Size: 180.0,\n" +
+                "Weight: 130.33,\n" +
+                "Age: 14,\n" +
+                "Food: Nuts,\n" +
+                "Health: 50,\n" +
+                "Home: Wild animal\n";
 
         assertEquals(bongString, bong.toString());
     }

@@ -1,12 +1,13 @@
 package sanctuary.habitat;
 
-import sanctuary.SanctuaryKeeperDriver;
 import sanctuary.model.habitat.Enclosure;
 import sanctuary.model.habitat.Isolation;
 import sanctuary.model.habitat.Sanctuary;
 import sanctuary.utils.Food;
 import sanctuary.utils.Sex;
 import sanctuary.utils.Species;
+import sanctuary.view.Utilities;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -27,7 +28,7 @@ public class SanctuaryTest {
         Isolation rescue = new Isolation(20, "Rescue - Isolation");
         fullFriends = new Sanctuary("Jungle Friends Primate Sanctuary", paradise, rescue);
 
-        SanctuaryKeeperDriver.addAdditionalAnimals(fullFriends, "monkeys.txt");
+        Utilities.addAdditionalAnimals(fullFriends, "monkeys.txt");
 
     }
 
@@ -182,17 +183,16 @@ public class SanctuaryTest {
 
         jungleFriends.provideMedicalAttention("alex");
 
-        String expected = "Animal{\n" +
-                "name=Alex,\n" +
-                "species=Quereza,\n" +
-                "sex=Male,\n" +
-                "size=170.0,\n" +
-                "weight=70.05,\n" +
-                "age=12,\n" +
-                "food=Fruits,\n" +
-                "health=100,\n" +
-                "home=Soteria - Isolation\n" +
-                "}";
+        String expected = "\n" +
+                "Name: Alex,\n" +
+                "Species: Quereza,\n" +
+                "Sex: Male,\n" +
+                "Size: 170.0,\n" +
+                "Weight: 70.05,\n" +
+                "Age: 12,\n" +
+                "Food: Fruits,\n" +
+                "Health: 100,\n" +
+                "Home: Soteria - Isolation\n";
 
         assertEquals(expected, jungleFriends.getAnimalBio(Species.Quereza,"Alex",'i'));
     }
@@ -208,45 +208,64 @@ public class SanctuaryTest {
         fullFriends.addNewAnimal("Nata", Species.Quereza ,Sex.Female, 1.65 , 50.05, 12 , Food.Nuts);
         fullFriends.addNewAnimal("Luka", Species.Tamarin ,Sex.Male, 1.95 , 80.05, 10 , Food.Insects);
 
-        String expected = "Welcome to Jungle Friends Primate Sanctuary\n" +
-                "This is the data information: \n" +
+        String expected = "Welcome to Jungle Friends Primate Sanctuary \n" +
+                "Total number of animals in this habitat: 23 \n" +
+                "\n" +
                 "\n" +
                 "Rescue - Isolation\n" +
                 "Animals in Habitat:3\n" +
+                "\n" +
                 "Name: Alex, Sex:Male, Favorite food: Fruits, Species: Quereza\n" +
                 "Name: Luka, Sex:Male, Favorite food: Insects, Species: Tamarin\n" +
                 "Name: Nata, Sex:Female, Favorite food: Nuts, Species: Quereza\n" +
                 "\n" +
                 "Paradise - Enclosure\n" +
                 "Animals in Habitat:20\n" +
+                "\n" +
                 "Species:Drill\n" +
+                "\n" +
                 "Name: Malandro Sex:Male Favorite food: Eggs, Species: Drill\n" +
+                "\n" +
                 "Species:Howler\n" +
+                "\n" +
                 "Name: Francis Sex:Female Favorite food: TreeSap, Species: Howler\n" +
                 "Name: Sebastian Sex:Male Favorite food: Insects, Species: Howler\n" +
+                "\n" +
                 "Species:Mangabey\n" +
+                "\n" +
                 "Name: Albert Sex:Male Favorite food: Leaves, Species: Mangabey\n" +
                 "Name: Romero Sex:Male Favorite food: Leaves, Species: Mangabey\n" +
+                "\n" +
                 "Species:Quereza\n" +
+                "\n" +
                 "Name: Lino Sex:Male Favorite food: Eggs, Species: Quereza\n" +
                 "Name: Lolocu Sex:Female Favorite food: Fruits, Species: Quereza\n" +
                 "Name: Magali Sex:Female Favorite food: Fruits, Species: Quereza\n" +
                 "Name: Navdeep Sex:Male Favorite food: Fruits, Species: Quereza\n" +
                 "Name: Rosita Sex:Female Favorite food: TreeSap, Species: Quereza\n" +
                 "Name: Shapito Sex:Male Favorite food: Fruits, Species: Quereza\n" +
+                "\n" +
                 "Species:Saki\n" +
+                "\n" +
                 "Name: Einstein Sex:Male Favorite food: Nuts, Species: Saki\n" +
                 "Name: Eureka Sex:Female Favorite food: Nuts, Species: Saki\n" +
+                "\n" +
                 "Species:Spider\n" +
+                "\n" +
                 "Name: Bulma Sex:Female Favorite food: Seeds, Species: Spider\n" +
                 "Name: Goku Sex:Male Favorite food: Seeds, Species: Spider\n" +
                 "Name: Jaki Sex:Male Favorite food: Eggs, Species: Spider\n" +
+                "\n" +
                 "Species:Squirrel\n" +
+                "\n" +
                 "Name: Karen Sex:Female Favorite food: TreeSap, Species: Squirrel\n" +
                 "Name: Naruto Sex:Male Favorite food: TreeSap, Species: Squirrel\n" +
+                "\n" +
                 "Species:Tamarin\n" +
+                "\n" +
                 "Name: Andres Sex:Male Favorite food: Fruits, Species: Tamarin\n" +
-                "Name: Romulo Sex:Male Favorite food: Fruits, Species: Tamarin\n";
+                "Name: Romulo Sex:Male Favorite food: Fruits, Species: Tamarin\n" +
+                "\n";
         assertEquals(expected, fullFriends.getAnimalsInHabitat());
 
     }

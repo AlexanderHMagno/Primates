@@ -1,12 +1,42 @@
 # Primates
 
-This is the implementation of a Sanctuary of Animals. 
+
+This is the implementation of a Sanctuary of Animals. (Check this at my [Github Portfolio](https://github.com/AlexanderHMagno/Primates))
 
 The Sanctuary consists of two different types of housing:
 - Isolation is used to keep monkeys when they first arrive at the sanctuary and anytime they are receiving medical attention. Isolation consists of a series of cages each of which can house a single animal.
 - Enclosures are much larger and can host a single troop (i.e., a group) of monkeys. Each troop consists of a single species that is found in the New World (some of which are pictured below): drill, guereza, howler, mangabey, saki, spider, squirrel, and tamarin.
 
-## How to use this implementation 
+
+## How to use this implementation (VIEW)
+
+The Jar file is located at the res folder, [here](https://github.com/AlexanderHMagno/Primates//tree/master/res/sanctuary.jar)
+
+The view will be divided by 4 panels, where you can interact with each of them thru the tab panel located at top of the view.
+
+From there you can select: 
+
+### Dashboard
+- Displays a quick summary of the Sanctuary
+![Primate](/res/readme/dashboard.png)
+
+### Add an Animal
+- Allows you to add new animals to the Sanctuary
+![Primate](/res/readme/addAnimal.png)
+
+### Isolation
+- Displays the current animals in isolation, you can check their health and send them to an enclosure only if they are healthy
+![Primate](/res/readme/isolation.png)
+
+### Enclosure
+- You can view all animals per species, feed them and move them back to Isolation. Additional you can view a list per name of all animals in this area.
+![Primate](/res/readme/enclosure.png)
+
+
+**NOTE:**  Remember that at any point you can switch between each panel, and the search menu at the bottom can be used to search for any animal in the sanctuary
+
+
+## How to use this implementation (MODEL)
 
 - Create an instance of Sanctuary. 
 - When you try to add a new member 
@@ -36,3 +66,10 @@ You could create different types of animals, but the sanctuary will only take ca
 changes we can take of any animal 
 
 - ![Primate](/res/Old-World-New-monkeys-1.jpg)
+
+
+## Bibliography 
+
+- “Java Swing Tutorial - javatpoint,” www.javatpoint.com. [Online]. Available: https://www.javatpoint.com/java-swing. [Accessed: 10-Dec-2022]. 
+- https://www.junglefriends.org/
+- “Getting all names in an enum as a string[],” Stack Overflow, 01-Jan-1960. [Online]. Available: https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string. [Accessed: 10-Dec-2022]. 

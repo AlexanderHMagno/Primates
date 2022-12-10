@@ -73,13 +73,14 @@ public class SearchPanel {
                             "Another habitat closed, and the monkeys were transferred to our location",
                             this.component
                     );
+                    features.updateIsolation();
                     loaded = !loaded;
                     return;
                 }  else if (searched.equals(doctorGroup)){
                     features.massiveHealer();
                     Utilities.showInfoMessage(
                             "Monkeys cured",
-                            "A Magic doctor has provided medical attention and moved the animals to their habitats",
+                            "A Magical doctor has provided medical attention and moved the animals to their habitats",
                             this.component
                     );
                     return;

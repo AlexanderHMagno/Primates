@@ -6,6 +6,7 @@ import sanctuary.utils.Species;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * This class represents an Enclosure Panel. It is used to create a Panel in the habitat
@@ -78,6 +79,10 @@ public class EnclosurePanel extends JFrame {
         JButton feedButton = Utilities.addButton("Feed", 400,550);
         feedButton.addActionListener(e -> this.feedAction());
         panel.add(feedButton);
+
+        JButton DisplayButton = Utilities.addButton("Display all", 200,600);
+        DisplayButton.addActionListener(e -> this.displayAction());
+        panel.add(DisplayButton);
 
         //Add everything to the container
         container.add(panel);
@@ -176,6 +181,26 @@ public class EnclosurePanel extends JFrame {
         } catch (NullPointerException | IllegalArgumentException n) {
             Utilities.showErrorMessage("No Animal Detected", this.component);
         }
+    }
+
+    /**
+     * Action to Display all animals in enclosure
+     */
+    private void displayAction() {
+
+        ArrayList<String> animals = features.displayAllAnimalsNames('e');
+
+        String info = "Zero Animals, we are ready to receive more animals";
+        if (animals.size() > 0) {
+            info = String.join(", \n",
+                    animals.toString()
+                            .replace('[',' ')
+                            .replace(']',' ')
+                            .split(",")
+            );
+        }
+
+        Utilities.showInfoMessage("Animals in Enclosure", info , this.component);
     }
 
     /**
